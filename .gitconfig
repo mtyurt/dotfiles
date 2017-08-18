@@ -1,0 +1,59 @@
+[user]
+	name = M. Tarik Yurt
+	email = mtyurt@gmail.com
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+[diff]
+	 tool = vimdiff
+[difftool]
+	 prompt = false
+[merge]
+	 tool = vimdiff
+[mergetool]
+	 prompt = false
+[mergetool "vscode"]
+	cmd = code --wait $MERGED
+[mergetool "meld"]
+	 trustExitCode = true
+	 cmd = open -W -a Meld --args --auto-merge \"$PWD/$LOCAL\" \"$PWD/$BASE\" \"$PWD/$REMOTE\" --output=\"$PWD/$MERGED\"
+[push]
+	default = simple
+[core]
+    autocrlf = input
+    editor = /usr/local/bin/vim
+	filemode = true
+	excludesfile = /Users/mt/.gitexcludes
+	trustctime = false
+[rebase]
+	autostash = true
+[alias]
+	co = checkout
+	rc = rebase --continue
+	please = push --force-with-lease
+	plf = pull --force
+	ds = diff --staged
+	today = log --since=00:00:00 --all --no-merges --oneline --author=mtyurt@gmail.com
+	branch-name = "!git rev-parse --abbrev-ref HEAD"
+	remote-branch = rev-parse --abbrev-ref --symbolic-full-name @{u}
+	rho = "!git reset --hard $(git remote-branch)"
+
+[rerere]
+	enabled = true
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
