@@ -1,0 +1,50 @@
+
+let g:neocomplete#enable_at_startup = 0
+let g:neocomplete#enable_smart_case = 1
+"let g:completor_go_omni_trigger = '(?:\b[^\W\d]\w*|[\]\)])\.(?:[^\W\d]\w*)?'
+"plugins
+Plug 'docteurklein/php-getter-setter.vim'
+Plug 'StanAngeloff/php.vim'
+"end of plugins
+
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+
+au FileType go nmap <leader>gt <Plug>(go-alternate)
+au FileType go nmap <leader>s <Plug>(go-implements)
+au FileType go nmap <leader>e <Plug>(go-rename)
+
+set relativenumber
+
+nnoremap <Up> :echomsg "use k"<cr>
+nnoremap <Down> :echomsg "use j"<cr>
+nnoremap <Left> :echomsg "use h"<cr>
+nnoremap <Right> :echomsg "use l"<cr>
+nnoremap <leader>nt :NERDTreeToggle <cr>
+
+"php specific configurations
+
+" function! PhpSyntaxOverride()
+"   hi! def link phpDocTags  phpDefine
+"   hi! def link phpDocParam phpType
+" endfunction
+
+" augroup phpSyntaxOverride
+"   autocmd!
+"   autocmd FileType php call PhpSyntaxOverride()
+" augroup END
+
+"end of php specific configurations
+
+" Do not show stupid q: window
+map q: :q
+
+" Search mappings: These will make it so that going to the next one in a
+" search will center on the line it's found in.
+nnoremap n nzzzv
+nnoremap N Nzzzv
