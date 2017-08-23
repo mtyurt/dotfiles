@@ -1,3 +1,4 @@
+#!/bin/bash
 if [ -f $(brew --prefix)/share/gitprompt.sh ]; then
   __GIT_PROMPT_DIR=$(brew --prefix)"/opt/bash-git-prompt/share"
   . $(brew --prefix)/share/gitprompt.sh
