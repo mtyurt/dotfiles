@@ -36,6 +36,9 @@ set ttyfast
 set ttymouse=xterm2
 set ttyscroll=3
 
+set relativenumber
+set tabstop=4
+set shiftwidth=4
 set laststatus=2
 set encoding=utf-8              " Set default encoding to UTF-8
 set autoread                    " Automatically reread changed files without asking me anything
@@ -116,16 +119,16 @@ augroup END
 "===================== STATUSLINE ====================
 
 let s:modes = {
-      \ 'n': 'NORMAL',
-      \ 'i': 'INSERT',
-      \ 'R': 'REPLACE'
-      \ 'v': 'VISUAL',
-      \ 'V': 'V-LINE',
+      \ 'n': 'NORMAL', 
+      \ 'i': 'INSERT', 
+      \ 'R': 'REPLACE', 
+      \ 'v': 'VISUAL', 
+      \ 'V': 'V-LINE', 
       \ "\<C-v>": 'V-BLOCK',
       \ 'c': 'COMMAND',
-      \ 's': 'SELECT',
-      \ 'S': 'S-LINE',
-      \ "\<C-s>": 'S-BLOCK',
+      \ 's': 'SELECT', 
+      \ 'S': 'S-LINE', 
+      \ "\<C-s>": 'S-BLOCK', 
       \ 't': 'TERMINAL'
       \}
 
@@ -161,12 +164,12 @@ function! StatusLinePercent()
 endfunction
 
 function! StatusLineLeftInfo()
- let branch = fugitive#head()
- let filename = '' != expand('%:t') ? expand('%:t') : '[No Name]'
- if branch !=# ''
-   return printf("%s | %s", branch, filename)
- endif
- return filename
+  let branch = fugitive#head()
+  let filename = '' != expand('%:t') ? expand('%:t') : '[No Name]'
+  if branch !=# ''
+    return printf("%s | %s", branch, filename)
+  endif
+  return filename
 endfunction
 
 exe 'hi! myInfoColor ctermbg=240 ctermfg=252'
@@ -186,7 +189,7 @@ set statusline+=\ %*
 
 " go command status (requires vim-go)
 set statusline+=%#goStatuslineColor#
-set statusline+=%{go#statusline#Show()}
+"set statusline+=%{go#statusline#Show()}
 set statusline+=%*
 
 " right section seperator
@@ -403,11 +406,11 @@ nmap <C-b> :CtrlPCurWD<cr>
 imap <C-b> <esc>:CtrlPCurWD<cr>
 
 " ==================== delimitMate ====================
-let g:delimitMate_expand_cr = 1
-let g:delimitMate_expand_space = 1
-let g:delimitMate_smart_quotes = 1
-let g:delimitMate_expand_inside_quotes = 0
-let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
+let g:delimitMate_expand_cr = 1   
+let g:delimitMate_expand_space = 1    
+let g:delimitMate_smart_quotes = 1    
+let g:delimitMate_expand_inside_quotes = 0    
+let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'   
 
 imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
 
@@ -422,45 +425,6 @@ let NERDTreeShowHidden=1
 let g:ackprg = 'ag --vimgrep --smart-case'
 " ==================== vim-json ====================
 let g:vim_json_syntax_conceal = 0
-
-" ==================== UltiSnips ====================
-function! g:UltiSnips_Complete()
-  call UltiSnips#ExpandSnippet()
-  if g:ulti_expand_res == 0
-    if pumvisible()
-      return "\<C-n>"
-    else
-      call UltiSnips#JumpForwards()
-      if g:ulti_jump_forwards_res == 0
-        return "\<TAB>"
-      endif
-    endif
-  endif
-  return ""
-endfunction
-
-function! g:UltiSnips_Reverse()
-  call UltiSnips#JumpBackwards()
-  if g:ulti_jump_backwards_res == 0
-    return "\<C-P>"
-  endif
-
-  return ""
-endfunction
-
-
-if !exists("g:UltiSnipsJumpForwardTrigger")
-  let g:UltiSnipsJumpForwardTrigger = "<tab>"
-endif
-
-if !exists("g:UltiSnipsJumpBackwardTrigger")
-  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-endif
-
-au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
-
-
 
 " ==================== Various other plugin settings ====================
 nmap  -  <Plug>(choosewin)

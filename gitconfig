@@ -37,7 +37,7 @@
     autocrlf = input
     editor = /usr/local/bin/vim
 	filemode = true
-	excludesfile = /Users/mt/.gitexcludes
+	excludesfile = $HOME/.gitexcludes
 	trustctime = false
 [rebase]
 	autostash = true
