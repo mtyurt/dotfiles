@@ -22,6 +22,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-scriptease'
 Plug 'mileszs/ack.vim'
+Plug 'hashivim/vim-vagrant'
+Plug 'pearofducks/ansible-vim'
 
 call plug#end()
 
@@ -259,7 +261,7 @@ noremap k gk
 imap jk <Esc>
 
 " Source (reload configuration)
-nnoremap <silent> <F5> :source $MYNVIMRC<CR>
+nnoremap <silent> <F5> :source $MYVIMRC<CR>
 
 nnoremap <F6> :setlocal spell! spell?<CR>
 
