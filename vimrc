@@ -34,21 +34,21 @@ filetype plugin indent on
 
 set ttyfast
 set ttymouse=xterm2
-set ttyscroll=3
+set ttyscroll=3 "Maximum number of lines to scroll the screen. If there are more lines to scroll the window is redrawn. 
 
-set relativenumber
 set tabstop=4
 set shiftwidth=4
 set laststatus=2
 set encoding=utf-8              " Set default encoding to UTF-8
 set autoread                    " Automatically reread changed files without asking me anything
-set autoindent
+set autoindent                  " Copy indent from current line when starting a new line 
 set backspace=indent,eol,start  " Makes backspace key more powerful.
 set incsearch                   " Shows the match while typing
 set hlsearch                    " Highlight found searches
 set mouse=a                     "Enable mouse mode
 
 set noerrorbells             " No beeps
+set relativenumber
 set number                   " Show line numbers
 set showcmd                  " Show me what I'm typing
 set noswapfile               " Don't use swapfile
@@ -192,7 +192,7 @@ set statusline+=%#goStatuslineColor#
 "set statusline+=%{go#statusline#Show()}
 set statusline+=%*
 
-" right section seperator
+" right section separator
 set statusline+=%=
 
 " filetype, percentage, line number and column number
@@ -242,6 +242,10 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" split resizing
+nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+
 " Print full path
 map <C-f> :echo expand("%:p")<cr>
 
@@ -283,8 +287,7 @@ autocmd BufEnter * silent! lcd %:p:h
 " Do not show stupid q: window
 map q: :q
 
-" Don't move on * I'd use a function for this but Vim clobbers the last search
-" when you're in a function so fuck it, practicality beats purity.
+" Don't move on *
 nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
 
 " Time out on key codes but not mappings.
