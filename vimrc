@@ -24,6 +24,7 @@ Plug 'tpope/vim-scriptease'
 Plug 'mileszs/ack.vim'
 Plug 'hashivim/vim-vagrant'
 Plug 'pearofducks/ansible-vim'
+Plug 'ggreer/the_silver_searcher'
 
 call plug#end()
 
