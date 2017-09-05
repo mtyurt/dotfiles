@@ -90,6 +90,9 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 alias ls='ls -GpF'   # Mac OSX specific
 alias ll='ls -alGpF' # Mac OSX specific
 
+##git
+alias gs='git status'
+
 #completion
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
