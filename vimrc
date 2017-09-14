@@ -26,6 +26,9 @@ Plug 'mileszs/ack.vim'
 Plug 'hashivim/vim-vagrant'
 Plug 'pearofducks/ansible-vim'
 Plug 'ggreer/the_silver_searcher'
+Plug 'mileszs/ack.vim'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 
 call plug#end()
 
@@ -41,6 +44,7 @@ set ttymouse=xterm2
 set ttyscroll=3 "Maximum number of lines to scroll the screen. If there are more lines to scroll the window is redrawn. 
 
 set tabstop=4
+set expandtab					" Insert space characters when tab is pressed
 set shiftwidth=4
 set laststatus=2
 set encoding=utf-8              " Set default encoding to UTF-8
@@ -250,9 +254,6 @@ map <C-l> <C-W>l
 nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 
-" Print full path
-map <C-f> :echo expand("%:p")<cr>
-
 " Visual linewise up and down by default (and use gj gk to go quicker)
 noremap <Up> gk
 noremap <Down> gj
@@ -325,6 +326,11 @@ function! s:create_go_doc_comment()
   execute ":norm I// \<Esc>$"
 endfunction
 nnoremap <leader>ui :<C-u>call <SID>create_go_doc_comment()<CR>
+
+"key to insert mode with paste using F2 key
+map <F2> :set paste<CR>i
+" Leave paste mode on exit
+au InsertLeave * set nopaste
 
 "
 "===================== PLUGINS ======================
@@ -430,8 +436,12 @@ let NERDTreeShowHidden=1
 
 " ==================== Ag ====================
 let g:ackprg = 'ag --vimgrep --smart-case'
+
 " ==================== vim-json ====================
 let g:vim_json_syntax_conceal = 0
+
+" ==================== vim-markdown ====================
+let g:vim_markdown_folding_disabled = 1
 
 " ==================== Various other plugin settings ====================
 nmap  -  <Plug>(choosewin)
