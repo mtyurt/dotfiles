@@ -19,6 +19,7 @@ Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-scriptease'
 Plug 'mileszs/ack.vim'
@@ -438,4 +439,5 @@ nmap  -  <Plug>(choosewin)
 " Trigger a highlight in the appropriate direction when pressing these keys:
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
-" vim: sw=2 sw=2 et
+" Replace selected text with C-r
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
