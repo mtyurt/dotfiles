@@ -62,13 +62,23 @@ bind-key = select-layout even-horizontal
 bind-key | select-layout even-vertical
 
 # Resize panes
-bind-key J resize-pane -D 5
-bind-key K resize-pane -U 5
-bind-key H resize-pane -L 5
-bind-key L resize-pane -R 5
+bind-key -r J resize-pane -D 5
+bind-key -r K resize-pane -U 5
+bind-key -r H resize-pane -L 5
+bind-key -r L resize-pane -R 5
+
+# Navigate panes
+bind -r h select-pane -L
+bind -r j select-pane -D
+bind -r k select-pane -U
+bind -r l select-pane -R
 
 # Disable confirm before killing
 bind-key x kill-pane
+
+# Clear screen & history
+#bind -n C-k send-keys -R \; send-keys C-l \; clear-history
+unbind-key C-k
 
 # This tmux statusbar config was created by tmuxline.vim
 # on Wed, 25 Nov 2015
@@ -105,6 +115,7 @@ set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-open'
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
