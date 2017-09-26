@@ -51,6 +51,7 @@
 	branch-name = "!git rev-parse --abbrev-ref HEAD"
 	remote-branch = rev-parse --abbrev-ref --symbolic-full-name @{u}
 	rho = "!git reset --hard $(git remote-branch)"
+	git = !exec git
 
 [rerere]
 	enabled = true
