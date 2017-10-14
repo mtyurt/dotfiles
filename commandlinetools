@@ -5,6 +5,7 @@ node
 htop
 the_silver_searcher
 vim
+bash-completion
 
 # brew cask
 gogland
