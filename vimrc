@@ -56,7 +56,6 @@ set hlsearch                    " Highlight found searches
 set mouse=a                     "Enable mouse mode
 
 set noerrorbells             " No beeps
-set relativenumber
 set number                   " Show line numbers
 set showcmd                  " Show me what I'm typing
 set noswapfile               " Don't use swapfile
@@ -349,6 +348,7 @@ let g:go_def_mode = "guru"
 let g:go_echo_command_info = 1
 let g:go_gocode_autobuild = 0
 let g:go_gocode_unimported_packages = 1
+let g:go_addtags_transform = "camelcase"
 
 let g:go_autodetect_gopath = 1
 let g:go_info_mode = "guru"
