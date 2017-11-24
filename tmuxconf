@@ -37,7 +37,7 @@ unbind r
 bind r source-file ~/.tmux.conf \; display "Reloaded!"
 
 # Copy-paste integration
-set-option -g default-command "reattach-to-user-namespace -l bash"
+set-option -g default-command "reattach-to-user-namespace -l $SHELL"
 
 # Use vim keybindings in copy mode
 set-window-option -g mode-keys vi
@@ -45,6 +45,9 @@ bind -T copy-mode-vi v send -X begin-selection
 bind -T copy-mode-vi r send -X rectangle-toggle
 bind -T copy-mode-vi y send -X copy-selection
 
+# Copy to system clipboard after copying in tmux
+bind C-c run "tmux save-buffer - | reattach-to-user-namespace pbcopy"
+bind C-v run "reattach-to-user-namespace pbpaste | tmux load-buffer - && tmux paste-buffer"
 # Faster command sequence
 set -s escape-time 0
 

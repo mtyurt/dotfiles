@@ -34,7 +34,6 @@ call plug#end()
 
 "=====================================================
 "===================== SETTINGS ======================
-
 set nocompatible
 filetype off
 filetype plugin indent on
@@ -262,6 +261,9 @@ noremap k gk
 " Exit on jk
 imap jk <Esc>
 
+"Re-open the current file
+nmap <leader>R :edit!<CR>
+
 " Source (reload configuration)
 nnoremap <silent> <F5> :source $MYVIMRC<CR>
 
@@ -317,6 +319,8 @@ endfunction
 
 vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR><c-o>
 vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
+
+highlight LineNr ctermfg=yellow
 
 " create a go doc comment based on the word under the cursor
 function! s:create_go_doc_comment()
