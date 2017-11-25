@@ -71,6 +71,12 @@ x () {
          echo "'$1' is not a valid file"
      fi
 }
+pyclean(){
+    find . -name "*.pyc" -exec rm -f {} \;
+}
+# mvim(){
+#     mvim -v $*
+# }
 # exports
 export LSCOLORS=cxBxhxDxfxhxhxhxhxcxcx
 export CLICOLOR=1
@@ -89,6 +95,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 #aliases
 alias ls='ls -GpF'   # Mac OSX specific
 alias ll='ls -alGpF' # Mac OSX specific
+alias mvim="mvim -v"
 
 ##git
 alias gs='git status'

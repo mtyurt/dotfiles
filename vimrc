@@ -19,6 +19,7 @@ Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-abolish'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-scriptease'
@@ -29,7 +30,11 @@ Plug 'ggreer/the_silver_searcher'
 Plug 'mileszs/ack.vim'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
-
+Plug 'vim-scripts/indentpython.vim', {'for': 'python'}
+Plug 'tmhedberg/SimpylFold', {'for': 'python'}
+Plug 'vim-syntastic/syntastic', {'for': 'python'}
+Plug 'vim-syntastic/syntastic', {'for': 'python'}
+Plug 'Valloric/YouCompleteMe'
 call plug#end()
 
 "=====================================================
@@ -248,6 +253,9 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" Print full path
+map <C-a> :echo expand("%:p")<cr>
+
 " split resizing
 nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
@@ -320,7 +328,6 @@ endfunction
 vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR><c-o>
 vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
 
-highlight LineNr ctermfg=yellow
 
 " create a go doc comment based on the word under the cursor
 function! s:create_go_doc_comment()
@@ -335,9 +342,37 @@ map <F2> :set paste<CR>i
 " Leave paste mode on exit
 au InsertLeave * set nopaste
 
+" ==================== PYTHON ==================== 
+" leader-y to use yapf
+autocmd FileType python nnoremap <leader>y :0,$!yapf<Cr><C-o>
+
+" PEP8 indentation
+au BufNewFile,BufRead *.py
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix |
+    \ set foldlevel=99 |
+    \ set foldmethod=indent
+
+" Syntax highlighting
+let python_highlight_all=1
+
+highlight LineNr ctermfg=yellow
 "
 "===================== PLUGINS ======================
 "
+
+" ==================== SimplyFold ====================
+" Fold imports
+let g:SimpylFold_fold_import = 1
+
+" ==================== YouCompleteMe ====================
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " ==================== Fugitive ====================
 vnoremap <leader>gb :Gblame<CR>
