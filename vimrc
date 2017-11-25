@@ -33,7 +33,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'vim-scripts/indentpython.vim', {'for': 'python'}
 Plug 'tmhedberg/SimpylFold', {'for': 'python'}
 Plug 'vim-syntastic/syntastic', {'for': 'python'}
-Plug 'vim-syntastic/syntastic', {'for': 'python'}
+Plug 'nvie/vim-flake8', {'for': 'python'}
 Plug 'Valloric/YouCompleteMe'
 call plug#end()
 
@@ -346,6 +346,8 @@ au InsertLeave * set nopaste
 " leader-y to use yapf
 autocmd FileType python nnoremap <leader>y :0,$!yapf<Cr><C-o>
 
+" Make buffer modifiable for yapf
+au BufNewFile,BufRead *.py set modifiable
 " PEP8 indentation
 au BufNewFile,BufRead *.py
     \ set tabstop=4 |
@@ -373,6 +375,14 @@ let g:SimpylFold_fold_import = 1
 " ==================== YouCompleteMe ====================
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" ==================== vim-flake8 ====================
+autocmd FileType python map <buffer> <leader>l :call Flake8()<CR>
+highlight link Flake8_Error      Error
+highlight link Flake8_Warning    WarningMsg
+highlight link Flake8_Complexity WarningMsg
+highlight link Flake8_Naming     WarningMsg
+highlight link Flake8_PyFlake    WarningMsg
 
 " ==================== Fugitive ====================
 vnoremap <leader>gb :Gblame<CR>
