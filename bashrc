@@ -71,17 +71,32 @@ x () {
          echo "'$1' is not a valid file"
      fi
 }
+
+## python
+### clean python outputs
 pyclean(){
     find . -name "*.pyc" -exec rm -f {} \;
 }
-# mvim(){
-#     mvim -v $*
-# }
-# exports
+
+## docker
+### clean dangling images and finished containers
+dkclean(){
+    docker ps -f status=exited | tail -n +2 | awk '{system("docker rm -f "$1)}'
+    docker images | awk '{if ($1 == "<none>"){system("docker rmi -f "$3)}}'
+}
+
+## macOS
+### dns flush macosx
+dnsflush(){
+    sudo ifconfig en0 down
+    sudo route flush
+    sudo ifconfig en0 up
+}
+
 export LSCOLORS=cxBxhxDxfxhxhxhxhxcxcx
 export CLICOLOR=1
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:$GOBIN"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin"
 
 ## colored man pages
 export LESS_TERMCAP_mb=$'\E[01;31m'
@@ -95,10 +110,10 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 #aliases
 alias ls='ls -GpF'   # Mac OSX specific
 alias ll='ls -alGpF' # Mac OSX specific
-alias mvim="mvim -v"
 
 ##git
 alias gs='git status'
+alias gd='git diff'
 
 #completion
 bind '"\e[A": history-search-backward'
