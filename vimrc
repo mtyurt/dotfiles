@@ -32,9 +32,10 @@ Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'vim-scripts/indentpython.vim', {'for': 'python'}
 Plug 'tmhedberg/SimpylFold', {'for': 'python'}
-Plug 'vim-syntastic/syntastic', {'for': 'python'}
+Plug 'vim-syntastic/syntastic'
 Plug 'nvie/vim-flake8', {'for': 'python'}
-Plug 'Valloric/YouCompleteMe'
+Plug 'terryma/vim-expand-region'
+ 
 call plug#end()
 
 "=====================================================
@@ -44,8 +45,10 @@ filetype off
 filetype plugin indent on
 
 set ttyfast
-set ttymouse=xterm2
-set ttyscroll=3 "Maximum number of lines to scroll the screen. If there are more lines to scroll the window is redrawn. 
+if !has('nvim')
+    set ttymouse=xterm2
+    set ttyscroll=3 "Maximum number of lines to scroll the screen. If there are more lines to scroll the window is redrawn. 
+endif
 
 set tabstop=4
 set expandtab					" Insert space characters when tab is pressed
@@ -53,6 +56,7 @@ set shiftwidth=4
 set laststatus=2
 set encoding=utf-8              " Set default encoding to UTF-8
 set autoread                    " Automatically reread changed files without asking me anything
+set autowrite
 set autoindent                  " Copy indent from current line when starting a new line 
 set backspace=indent,eol,start  " Makes backspace key more powerful.
 set incsearch                   " Shows the match while typing
@@ -219,6 +223,10 @@ set statusline+=\ %*
 " i.e: <leader>w saves the current file
 let mapleader = ","
 
+" keep selected line selected while indenting
+vnoremap < <gv
+vnoremap > >gv
+
 " Some useful quickfix shortcuts for quickfix
 map <C-n> :cn<CR>
 map <C-m> :cp<CR>
@@ -372,18 +380,23 @@ highlight LineNr ctermfg=yellow
 " Fold imports
 let g:SimpylFold_fold_import = 1
 
-" ==================== YouCompleteMe ====================
-let g:ycm_autoclose_preview_window_after_completion=1
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " ==================== vim-flake8 ====================
 autocmd FileType python map <buffer> <leader>l :call Flake8()<CR>
+let g:flake8_show_in_gutter=1  " show
+let g:flake8_show_in_file=1  " show
+autocmd BufWritePost *.py call Flake8()
+
 highlight link Flake8_Error      Error
 highlight link Flake8_Warning    WarningMsg
 highlight link Flake8_Complexity WarningMsg
 highlight link Flake8_Naming     WarningMsg
 highlight link Flake8_PyFlake    WarningMsg
 
+" ==================== vim-syntastic ====================
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+let g:syntastic_python_checkers = ['flake8']
 " ==================== Fugitive ====================
 vnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gb :Gblame<CR>
