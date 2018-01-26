@@ -21,7 +21,10 @@ set -g visual-activity on
 set -g display-panes-time 2000
 
 # {n}vim compability
-set -g default-terminal "xterm-256color"
+set -g default-terminal "screen-256color"
+
+# for vim speeeeeed
+set-option -s escape-time 10
 
 # Split horiziontal and vertical splits, instead of % and "
 bind-key v split-window -h -c '#{pane_current_path}'
@@ -31,6 +34,12 @@ bind-key s split-window -v -c '#{pane_current_path}'
 # right. No need to use the modifier (C-b).
 bind-key -n C-S-Left swap-window -t -1
 bind-key -n C-S-Right swap-window -t +1
+
+#join pane from different window
+bind-key J command-prompt -p "join pane from:"  "join-pane -s '%%'"
+
+# send pane to another window
+bind-key S command-prompt -p "send pane to:"  "join-pane -t '%%'"
 
 # Source file
 unbind r
@@ -45,8 +54,7 @@ bind -T copy-mode-vi v send -X begin-selection
 bind -T copy-mode-vi r send -X rectangle-toggle
 bind -T copy-mode-vi y send -X copy-selection
 
-# Copy to system clipboard after copying in tmux
-bind C-c run "tmux save-buffer - | reattach-to-user-namespace pbcopy"
+# Copy to system clipboard after copying in tmux bind C-c run "tmux save-buffer - | reattach-to-user-namespace pbcopy"
 bind C-v run "reattach-to-user-namespace pbpaste | tmux load-buffer - && tmux paste-buffer"
 # Faster command sequence
 set -s escape-time 0
