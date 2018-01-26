@@ -1,4 +1,6 @@
 #!/bin/bash
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:$HOME/.cargo/bin"
+
 if [ -f $(brew --prefix)/share/gitprompt.sh ]; then
   __GIT_PROMPT_DIR=$(brew --prefix)"/opt/bash-git-prompt/share"
   . $(brew --prefix)/share/gitprompt.sh
@@ -96,7 +98,6 @@ dnsflush(){
 export LSCOLORS=cxBxhxDxfxhxhxhxhxcxcx
 export CLICOLOR=1
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin"
 
 ## colored man pages
 export LESS_TERMCAP_mb=$'\E[01;31m'
@@ -130,3 +131,4 @@ export FIGNORE='.o:.pyc'
 # performing filename expansion.
 export GLOBIGNORE='.DS_Store:*.o:*.pyc'
 
+source ~/.config/up/up.sh
