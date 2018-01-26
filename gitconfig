@@ -1,5 +1,5 @@
 [user]
-	name = M. Tarik Yurt
+	name = M. Tarık Yurt
 	email = mtyurt@gmail.com
 [color]
     branch = auto
@@ -43,11 +43,14 @@
 [rebase]
 	autostash = true
 [alias]
+    ca = commit --amend
+    can = commit --amend --no-edit
 	co = checkout
 	rc = rebase --continue
 	please = push --force-with-lease
 	plf = pull --force
 	ds = diff --staged
+    cf = "!f() { git commit --fixup=$1; }; f"
 	today = log --since=00:00:00 --all --no-merges --oneline --author=mtyurt@gmail.com
 	branch-name = "!git rev-parse --abbrev-ref HEAD"
 	remote-branch = rev-parse --abbrev-ref --symbolic-full-name @{u}
@@ -60,3 +63,8 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
