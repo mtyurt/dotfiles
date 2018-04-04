@@ -3,7 +3,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Raimondi/delimitMate'
-Plug 'SirVer/ultisnips'
 Plug 'corylanou/vim-present', {'for' : 'present'}
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
@@ -35,6 +34,8 @@ Plug 'tmhedberg/SimpylFold', {'for': 'python'}
 Plug 'vim-syntastic/syntastic'
 Plug 'nvie/vim-flake8', {'for': 'python'}
 Plug 'terryma/vim-expand-region'
+Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'lervag/vimtex', {'for': 'tex'}
  
 call plug#end()
 
@@ -277,11 +278,13 @@ noremap k gk
 " Exit on jk
 imap jk <Esc>
 
+" Map leader-z to fold toggling
+nmap <leader>z za
 "Re-open the current file
 nmap <leader>R :edit!<CR>
 
 " Source (reload configuration)
-nnoremap <silent> <F5> :source $MYVIMRC<CR>
+nnoremap <silent> <F5> :source $MYVIMRC && echo "Refreshed!"<CR>
 
 nnoremap <F6> :setlocal spell! spell?<CR>
 
@@ -502,8 +505,14 @@ let g:ackprg = 'ag --vimgrep --smart-case'
 " ==================== vim-json ====================
 let g:vim_json_syntax_conceal = 0
 
-" ==================== vim-markdown ====================
+" ==================== markdown ====================
 let g:vim_markdown_folding_disabled = 1
+let vim_markdown_preview_toggle=2
+let vim_markdown_preview_hotkey='<C-m>'
+
+" ==================== tex ====================
+autocmd BufReadPre *.tex setlocal textwidth=80
+autocmd BufReadPre *.tex setlocal cc=80
 
 " ==================== Various other plugin settings ====================
 nmap  -  <Plug>(choosewin)

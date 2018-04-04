@@ -19,7 +19,10 @@ if [ -f ~/.bash_private ]; then
   . ~/.bash_private
 fi
 
-# Get it from the original Git repo:
+# qfc: file completion
+[[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"
+
+# Get git-completion from the original Git repo:
 # https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
 if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
@@ -95,6 +98,11 @@ dnsflush(){
     sudo ifconfig en0 up
 }
 
+### open files with Mark Text
+mdedit(){ 
+    open -a Mark\ Text $*
+}
+
 export LSCOLORS=cxBxhxDxfxhxhxhxhxcxcx
 export CLICOLOR=1
 
@@ -115,6 +123,9 @@ alias ll='ls -alGpF' # Mac OSX specific
 ##git
 alias gs='git status'
 alias gd='git diff'
+
+##unix
+alias grep='grep --color=auto'
 
 #completion
 bind '"\e[A": history-search-backward'
