@@ -1,0 +1,26 @@
+#!/bin/sh
+# Copyright 2012 The Go Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+# git gofmt and go build pre-commit hook
+
+gofiles=$(git diff --cached --name-only --diff-filter=ACM | grep '\.go$')
+[ -z "$gofiles" ] && exit 0
+
+unformatted=$(gofmt -l $gofiles)
+if [ ! -z "$unformatted" ]; then
+# Some files are not gofmt'd. Print message and fail.
+    echo >&2 "Go files must be formatted with gofmt. Please run:"
+    for fn in $unformatted; do
+        echo >&2 "  gofmt -w $PWD/$fn"
+    done
+    exit 1
+fi
+
+go build >&2
+if [[ $? != 0 ]]; then
+    echo >&2 "Go build failed! Please fix the problems before committing."
+    exit 1
+fi
+exit 0

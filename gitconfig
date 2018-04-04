@@ -40,6 +40,7 @@
 	filemode = true
 	excludesfile = ~/.dotfiles/gitignore
 	trustctime = false
+	hooksPath = ~/.dotfiles/githooks
 [rebase]
 	autostash = true
 [alias]
