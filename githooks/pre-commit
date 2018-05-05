@@ -18,9 +18,11 @@ if [ ! -z "$unformatted" ]; then
     exit 1
 fi
 
-go build >&2
-if [[ $? != 0 ]]; then
-    echo >&2 "Go build failed! Please fix the problems before committing."
-    exit 1
-fi
+# go build -o hookbuildoutput >&2
+# if [[ $? != 0 ]]; then
+#     echo >&2 "Go build failed! Please fix the problems before committing."
+#     rm hookbuildoutput
+#     exit 1
+# fi
+# rm hookbuildoutput
 exit 0
