@@ -1,10 +1,15 @@
 call plug#begin('~/.vim/plugged')
 
+Plug 'Shougo/deoplete.nvim'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'vim-scripts/YankRing.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Raimondi/delimitMate'
 Plug 'corylanou/vim-present', {'for' : 'present'}
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ludovicchabant/vim-ctrlp-autoignore'
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'elzr/vim-json', {'for' : 'json'}
 Plug 'fatih/vim-go'
@@ -36,6 +41,12 @@ Plug 'nvie/vim-flake8', {'for': 'python'}
 Plug 'terryma/vim-expand-region'
 Plug 'JamshedVesuna/vim-markdown-preview'
 Plug 'lervag/vimtex', {'for': 'tex'}
+Plug 'elzr/vim-json', {'for': 'json'}
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'stephpy/vim-php-cs-fixer', {'for': 'php'}
+"Plug 'lvht/phpcd.vim', {'for': 'php'}
+Plug 'skywind3000/asyncrun.vim'
+Plug 'anschnapp/move-less'
  
 call plug#end()
 
@@ -479,9 +490,7 @@ let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 let g:ctrlp_buftag_types = {'go' : '--language-force=go --golang-types=ftv'}
-
-nmap <C-b> :CtrlPCurWD<cr>
-imap <C-b> <esc>:CtrlPCurWD<cr>
+let g:ctrlp_extensions = ['autoignore']
 
 " ==================== delimitMate ====================
 let g:delimitMate_expand_cr = 1   
@@ -514,6 +523,22 @@ let vim_markdown_preview_hotkey='<C-m>'
 autocmd BufReadPre *.tex setlocal textwidth=80
 autocmd BufReadPre *.tex setlocal cc=80
 
+" ==================== yankring ====================
+let g:yankring_replace_n_pkey = '<C-M>'
+let g:yankring_replace_n_nkey = '<C-N>'
+
+
+" ==================== deoplete ====================
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
+let g:deoplete#ignore_sources.php = ['phpcd', 'omni']
+
+" ==================== gutentags ====================
+let g:gutentags_ctags_tagfile = '.git/gutentags'
+
+" ==================== AsyncRun ====================
+let g:asyncrun_open = 6
+
 " ==================== Various other plugin settings ====================
 nmap  -  <Plug>(choosewin)
 
@@ -522,3 +547,6 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " Replace selected text with C-r
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
+nnoremap <C-P> :CtrlP<cr>
+inoremap <C-P> <esc>:CtrlP<cr>
