@@ -77,6 +77,10 @@ x () {
      fi
 }
 
+d(){
+    echo "$*" >> done.txt
+}
+
 ## python
 ### clean python outputs
 pyclean(){
