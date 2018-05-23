@@ -146,4 +146,3 @@ export FIGNORE='.o:.pyc'
 # performing filename expansion.
 export GLOBIGNORE='.DS_Store:*.o:*.pyc'
 
-source ~/.config/up/up.sh

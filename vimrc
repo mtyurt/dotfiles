@@ -39,7 +39,6 @@ Plug 'tmhedberg/SimpylFold', {'for': 'python'}
 Plug 'vim-syntastic/syntastic'
 Plug 'nvie/vim-flake8', {'for': 'python'}
 Plug 'terryma/vim-expand-region'
-Plug 'JamshedVesuna/vim-markdown-preview'
 Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'elzr/vim-json', {'for': 'json'}
 Plug 'ludovicchabant/vim-gutentags'
@@ -428,6 +427,7 @@ let g:go_addtags_transform = "camelcase"
 
 let g:go_autodetect_gopath = 1
 let g:go_info_mode = "guru"
+autocmd BufWritePre *.go :GoBuild
 
 " let g:go_metalinter_autosave = 1
 " let g:go_metalinter_autosave_enabled = ['vet', 'golint']
@@ -534,7 +534,7 @@ let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
 let g:deoplete#ignore_sources.php = ['phpcd', 'omni']
 
 " ==================== gutentags ====================
-let g:gutentags_ctags_tagfile = '.git/gutentags'
+" let g:gutentags_ctags_tagfile = '.git/gutentags'
 
 " ==================== AsyncRun ====================
 let g:asyncrun_open = 6

@@ -1,3 +1,5 @@
 **/.flake8
 vim-markdown-preview.html
 .ctrlp
+tags
+gutentags
