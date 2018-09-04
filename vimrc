@@ -16,8 +16,10 @@ Plug 'fatih/vim-go'
 Plug 'fatih/vim-hclfmt'
 Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
 Plug 'tomasr/molokai'
+Plug 'fenetikm/falcon'
 Plug 'hashivim/vim-hashicorp-tools'
 Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
 Plug 't9md/vim-choosewin'
 Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
 Plug 'tpope/vim-commentary'
@@ -46,6 +48,7 @@ Plug 'stephpy/vim-php-cs-fixer', {'for': 'php'}
 "Plug 'lvht/phpcd.vim', {'for': 'php'}
 Plug 'skywind3000/asyncrun.vim'
 Plug 'anschnapp/move-less'
+" Plug 'ryanoasis/vim-devicons'
  
 call plug#end()
 
@@ -65,7 +68,7 @@ set tabstop=4
 set expandtab					" Insert space characters when tab is pressed
 set shiftwidth=4
 set laststatus=2
-set encoding=utf-8              " Set default encoding to UTF-8
+set encoding=utf8              " Set default encoding to UTF-8
 set autoread                    " Automatically reread changed files without asking me anything
 set autowrite
 set autoindent                  " Copy indent from current line when starting a new line 
@@ -117,6 +120,11 @@ let g:rehash256 = 1
 set background=dark
 let g:molokai_original = 1
 colorscheme molokai
+
+" falcon colorscheme
+" colorscheme falcon
+" set termguicolors
+
 
 " open help vertically
 command! -nargs=* -complete=help Help vertical belowright help <args>
@@ -374,7 +382,7 @@ au BufNewFile,BufRead *.py
     \ set tabstop=4 |
     \ set softtabstop=4 |
     \ set shiftwidth=4 |
-    \ set textwidth=79 |
+    \ set textwidth=119 |
     \ set expandtab |
     \ set autoindent |
     \ set fileformat=unix |
@@ -388,6 +396,11 @@ highlight LineNr ctermfg=yellow
 "
 "===================== PLUGINS ======================
 "
+
+" ==================== Fonts ====================
+" set guifont=overpass-mono-regular:h11
+set guifont=DroidSansMono_Nerd_Font:h11
+
 
 " ==================== SimplyFold ====================
 " Fold imports
@@ -503,13 +516,14 @@ imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
 
 " ==================== NerdTree ====================
 " For toggling
-noremap <Leader>n :NERDTreeToggle<cr>
-noremap <Leader>f :NERDTreeFind<cr>
+noremap <Leader>n :NERDTreeTabsToggle<cr>
+noremap <Leader>f :NERDTreeTabsFind<cr>
 
 let NERDTreeShowHidden=1
 
 " ==================== Ag ====================
 let g:ackprg = 'ag --vimgrep --smart-case'
+cnoreabbrev ag Gcd <bar> Ack!
 
 " ==================== vim-json ====================
 let g:vim_json_syntax_conceal = 0
