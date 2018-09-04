@@ -5,15 +5,18 @@
     branch = auto
     diff = auto
     status = auto
+	ui = true
 [color "branch"]
     current = yellow reverse
     local = yellow
     remote = green
 [color "diff"]
-    meta = yellow bold
-    frag = magenta bold
-    old = red bold
-    new = green bold
+	meta = yellow
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	commit = yellow bold
+	whitespace = red reverse
 [color "status"]
     added = yellow
     changed = green
@@ -41,6 +44,7 @@
 	excludesfile = ~/.dotfiles/gitignore
 	trustctime = false
 	hooksPath = ~/.dotfiles/githooks
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [rebase]
 	autostash = true
 [alias]
@@ -48,6 +52,8 @@
     can = commit --amend --no-edit
 	co = checkout
 	rc = rebase --continue
+    ri = rebase -i
+    ria = rebase -i --autosquash
 	please = push --force-with-lease
 	plf = pull --force
     dff = diff --color-moved
@@ -71,3 +77,8 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
