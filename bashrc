@@ -216,3 +216,6 @@ export FIGNORE='.o:.pyc'
 # performing filename expansion.
 export GLOBIGNORE='.DS_Store:*.o:*.pyc'
 
+HOSTFILE=$HOME/.hosts
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
