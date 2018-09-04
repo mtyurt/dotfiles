@@ -192,7 +192,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 
 #aliases
 alias ls='ls -GpF'   # Mac OSX specific
-alias ll='ls -alGpF' # Mac OSX specific
+alias ll='/usr/local/bin/ls_extended -hsl' # Mac OSX specific
 
 ##git
 alias gs='git status'
