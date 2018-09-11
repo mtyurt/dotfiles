@@ -48,8 +48,8 @@ Plug 'stephpy/vim-php-cs-fixer', {'for': 'php'}
 "Plug 'lvht/phpcd.vim', {'for': 'php'}
 Plug 'skywind3000/asyncrun.vim'
 Plug 'anschnapp/move-less'
-" Plug 'ryanoasis/vim-devicons'
- 
+Plug 'SirVer/ultisnips'
+
 call plug#end()
 
 "=====================================================
@@ -519,9 +519,11 @@ imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
 noremap <Leader>n :NERDTreeTabsToggle<cr>
 noremap <Leader>f :NERDTreeTabsFind<cr>
 
+let g:nerdtree_tabs_autofind = 1
+
 let NERDTreeShowHidden=1
 
-" ==================== Ag ====================
+" ==================== Ag =========================
 let g:ackprg = 'ag --vimgrep --smart-case'
 cnoreabbrev ag Gcd <bar> Ack!
 
@@ -532,6 +534,18 @@ let g:vim_json_syntax_conceal = 0
 let g:vim_markdown_folding_disabled = 1
 let vim_markdown_preview_toggle=2
 let vim_markdown_preview_hotkey='<C-m>'
+
+au BufNewFile,BufRead *.md
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=119 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set foldlevel=99 |
+    \ set foldmethod=indent
+
+autocmd CursorHold,CursorHoldI *.md update
 
 " ==================== tex ====================
 autocmd BufReadPre *.tex setlocal textwidth=80
@@ -552,6 +566,9 @@ let g:deoplete#ignore_sources.php = ['phpcd', 'omni']
 
 " ==================== AsyncRun ====================
 let g:asyncrun_open = 6
+
+" ==================== UltiSnips ===================
+let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
 
 " ==================== Various other plugin settings ====================
 nmap  -  <Plug>(choosewin)
