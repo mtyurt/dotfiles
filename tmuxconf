@@ -127,6 +127,9 @@ setw -g window-status-current-format "#[fg=colour236,bg=colour240,nobold,nounder
 
 source-file ~/.dotfiles/falcon.tmux.conf
 
+set -g status-right "#[fg=yellow,bg=#3e3e40]$USER@#h #[fg=#89898c,bg=#3e3e40]│#[fg=cyan,bg=#3e3e40] Batt: #{battery_percentage} #[fg=#89898c,bg=#3e3e40]│#[fg=white,bg=#3e3e40]%d/%m/%Y %H:%M "
+
+
 # List of plugins
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
@@ -134,6 +137,7 @@ set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-open'
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-battery'
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
