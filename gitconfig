@@ -66,7 +66,7 @@
 	rho = "!git reset --hard $(git remote-branch)"
 	git = !exec git
 	setup-fetching-prs = "!git config --add remote.origin.fetch '+refs/pull/*/head:refs/remotes/origin/pr/*' && git fetch origin"
-    delete-merged-branches = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+    delete-merged-branches = "!git branch --merged | grep -v master | grep -v '\\*' | xargs -n 1 git branch -d"
 [rerere]
 	enabled = true
 [mergetool "sourcetree"]
