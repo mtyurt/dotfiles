@@ -2,4 +2,7 @@
 vim-markdown-preview.html
 .ctrlp
 tags
+tags.lock
+tags.temp
+tags.temp.tmp
 gutentags
