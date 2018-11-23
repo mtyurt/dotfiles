@@ -96,6 +96,8 @@ bind-key x kill-pane
 #bind -n C-k send-keys -R \; send-keys C-l \; clear-history
 unbind-key C-k
 
+bind-key C-c clear-history
+
 # This tmux statusbar config was created by tmuxline.vim
 # on Wed, 25 Nov 2015
 
@@ -127,7 +129,7 @@ setw -g window-status-current-format "#[fg=colour236,bg=colour240,nobold,nounder
 
 source-file ~/.dotfiles/falcon.tmux.conf
 
-set -g status-right "#[fg=yellow,bg=#3e3e40]$USER@#h #[fg=#89898c,bg=#3e3e40]│#[fg=cyan,bg=#3e3e40] Batt: #{battery_percentage} #[fg=#89898c,bg=#3e3e40]│#[fg=white,bg=#3e3e40]%d/%m/%Y %H:%M "
+set -g status-right "#[fg=yellow,bg=#3e3e40]$USER #[fg=#89898c,bg=#3e3e40]│#[fg=green,bg=#3e3e40] Batt: #{battery_percentage} #[fg=#89898c,bg=#3e3e40]│#[fg=white,bg=#3e3e40]%d/%m/%Y %H:%M "
 
 
 # List of plugins
