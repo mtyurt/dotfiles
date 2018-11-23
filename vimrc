@@ -7,7 +7,6 @@ Plug 'vim-scripts/YankRing.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Raimondi/delimitMate'
-Plug 'corylanou/vim-present', {'for' : 'present'}
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ludovicchabant/vim-ctrlp-autoignore'
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
@@ -23,18 +22,15 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 't9md/vim-choosewin'
 Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-abolish'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-scriptease'
+Plug 'tpope/vim-abolish'
 Plug 'mileszs/ack.vim'
 Plug 'hashivim/vim-vagrant'
 Plug 'pearofducks/ansible-vim'
 Plug 'ggreer/the_silver_searcher'
 Plug 'mileszs/ack.vim'
-Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'vim-scripts/indentpython.vim', {'for': 'python'}
 Plug 'tmhedberg/SimpylFold', {'for': 'python'}
@@ -49,6 +45,7 @@ Plug 'stephpy/vim-php-cs-fixer', {'for': 'php'}
 Plug 'skywind3000/asyncrun.vim'
 Plug 'anschnapp/move-less'
 Plug 'SirVer/ultisnips'
+Plug 'majutsushi/tagbar'
 
 call plug#end()
 
@@ -63,6 +60,12 @@ if !has('nvim')
     set ttymouse=xterm2
     set ttyscroll=3 "Maximum number of lines to scroll the screen. If there are more lines to scroll the window is redrawn. 
 endif
+
+set scrolloff=5          " Show 5 lines above the cursor while scrolling
+set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+set backspace=indent,eol,start
+set wildmenu
+set ruler
 
 set tabstop=4
 set expandtab					" Insert space characters when tab is pressed
@@ -499,7 +502,7 @@ let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
 let g:ctrlp_mruf_max=450    " number of recently opened files
 let g:ctrlp_max_files=0     " do not limit the number of searchable files
 let g:ctrlp_use_caching = 1
-let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
 let g:ctrlp_buftag_types = {'go' : '--language-force=go --golang-types=ftv'}
@@ -571,6 +574,9 @@ let g:asyncrun_open = 6
 let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
 
 " ==================== Various other plugin settings ====================
+
+nmap <C-T> :TagbarToggle<CR>
+
 nmap  -  <Plug>(choosewin)
 
 " Trigger a highlight in the appropriate direction when pressing these keys:
