@@ -190,6 +190,14 @@ export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
+## colored less  - requires pip install pygments
+export LESS='-R'
+export LESSOPEN='|~/.lessfilter %s'
+
+## ag with less colorful
+agl(){
+    ag $1 --color | less
+}
 #aliases
 alias ls='ls -GpF'   # Mac OSX specific
 alias ll='/usr/local/bin/ls_extended -hsl' # Mac OSX specific
@@ -197,6 +205,9 @@ alias ll='/usr/local/bin/ls_extended -hsl' # Mac OSX specific
 ##git
 alias gs='git status'
 alias gd='git diff'
+
+##kubernetes
+alias k=kubectl
 
 ##unix
 alias grep='grep --color=auto'
@@ -217,5 +228,6 @@ export FIGNORE='.o:.pyc'
 export GLOBIGNORE='.DS_Store:*.o:*.pyc'
 
 HOSTFILE=$HOME/.hosts
+EDITOR=vim
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
