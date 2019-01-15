@@ -83,6 +83,12 @@ bind-key -r K resize-pane -U 5
 bind-key -r H resize-pane -L 5
 bind-key -r L resize-pane -R 5
 
+source-file "$HOME/.tmux-gitbar/tmux-gitbar.tmux"
+
+set-hook -g window-pane-changed 'run-shell $HOME/.tmux-gitbar/update-gitbar'
+set-hook -g session-window-changed 'run-shell $HOME/.tmux-gitbar/update-gitbar'
+set-hook -g session-changed 'run-shell $HOME/.tmux-gitbar/update-gitbar'
+
 # Navigate panes
 bind -r h select-pane -L
 bind -r j select-pane -D
@@ -129,8 +135,7 @@ setw -g window-status-current-format "#[fg=colour236,bg=colour240,nobold,nounder
 
 source-file ~/.dotfiles/falcon.tmux.conf
 
-set -g status-right "#[fg=yellow,bg=#3e3e40]$USER #[fg=#89898c,bg=#3e3e40]│#[fg=green,bg=#3e3e40] Batt: #{battery_percentage} #[fg=#89898c,bg=#3e3e40]│#[fg=white,bg=#3e3e40]%d/%m/%Y %H:%M "
-
+set -g status-right " #[fg=#89898c,bg=#3e3e40]│ #[fg=yellow,bg=#3e3e40]$USER #[fg=#89898c,bg=#3e3e40]│#[fg=green,bg=#3e3e40] Batt: #{battery_percentage} #[fg=#89898c,bg=#3e3e40]│#[fg=white,bg=#3e3e40]%d/%m/%Y %H:%M "
 
 # List of plugins
 set -g @plugin 'tmux-plugins/tpm'

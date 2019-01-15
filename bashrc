@@ -1,13 +1,41 @@
 #!/bin/bash
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:$HOME/.cargo/bin"
 
-if [ -f $(brew --prefix)/share/gitprompt.sh ]; then
-  __GIT_PROMPT_DIR=$(brew --prefix)"/opt/bash-git-prompt/share"
-  . $(brew --prefix)/share/gitprompt.sh
+# Func to gen PS1 after CMDs
+
+if [[ ! -n $TMUX ]]; then
+    if [ -f $(brew --prefix)/share/gitprompt.sh ]; then
+      __GIT_PROMPT_DIR=$(brew --prefix)"/opt/bash-git-prompt/share"
+      . $(brew --prefix)/share/gitprompt.sh
+    fi
+else
+    function __prompt_command() {
+        local EXIT="$?"             # This needs to be first
+        PS1=""
+
+        local RCol='\[\e[0m\]'
+
+        local Red='\[\e[0;31m\]'
+        local Gre='\[\e[0;32m\]'
+        local Yel='\[\e[0;33m\]'
+        local BYel='\[\e[1;33m\]'
+        local Pur='\[\e[1;35m\]'
+
+        if [ $EXIT != 0 ]; then
+            PS1+="${Red}\u${RCol}"      # Add red if exit code non 0
+        else
+            PS1+="${Gre}\u${RCol}"
+        fi
+
+        PS1+="${RCol}: ${Yel}\w${BYel} $ ${RCol}"
+    }
+
+    export PROMPT_COMMAND="__prompt_command;/Users/mt/.tmux-gitbar/update-gitbar"
+#    export PROMPT_COMMAND=/Users/mt/.tmux-gitbar/update-gitbar
 fi
 
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
+if [ -f /usr/local/share/bash-completion/bash_completion ]; then
+  . /usr/local/share/bash-completion/bash_completion
 fi
 
 if [ -f $(brew --prefix)/etc/profile.d/z.sh ]; then
