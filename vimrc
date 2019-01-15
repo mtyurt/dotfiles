@@ -1,51 +1,61 @@
 call plug#begin('~/.vim/plugged')
 
+" essentials
+Plug 'skywind3000/asyncrun.vim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Raimondi/delimitMate'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ludovicchabant/vim-ctrlp-autoignore'
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'mileszs/ack.vim'
+Plug 'ggreer/the_silver_searcher'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'SirVer/ultisnips'
+Plug 'majutsushi/tagbar'
+
+" good to have
+Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-commentary'
+Plug 'terryma/vim-expand-region'
+Plug 'anschnapp/move-less'
+Plug 't9md/vim-choosewin'
+Plug 'fcpg/vim-flattery'
+
+" syntax, language specific highlighting, etc
+Plug 'vim-syntastic/syntastic'
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'elzr/vim-json', {'for' : 'json'}
 Plug 'fatih/vim-go'
 Plug 'fatih/vim-hclfmt'
 Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
+Plug 'plasticboy/vim-markdown'
+Plug 'hashivim/vim-hashicorp-tools'
+Plug 'elzr/vim-json', {'for': 'json'}
+Plug 'lervag/vimtex', {'for': 'tex'}
+Plug 'pearofducks/ansible-vim'
+Plug 'hashivim/vim-vagrant'
+Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
+
+" color schemes
 Plug 'tomasr/molokai'
 Plug 'fenetikm/falcon'
-Plug 'hashivim/vim-hashicorp-tools'
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 't9md/vim-choosewin'
-Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
-Plug 'tpope/vim-commentary'
+
+" git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-abolish'
-Plug 'mileszs/ack.vim'
-Plug 'hashivim/vim-vagrant'
-Plug 'pearofducks/ansible-vim'
-Plug 'ggreer/the_silver_searcher'
-Plug 'mileszs/ack.vim'
-Plug 'plasticboy/vim-markdown'
+Plug 'junegunn/gv.vim'
+
+" pythonic
 Plug 'vim-scripts/indentpython.vim', {'for': 'python'}
 Plug 'tmhedberg/SimpylFold', {'for': 'python'}
-Plug 'vim-syntastic/syntastic'
 Plug 'nvie/vim-flake8', {'for': 'python'}
-Plug 'terryma/vim-expand-region'
-Plug 'lervag/vimtex', {'for': 'tex'}
-Plug 'elzr/vim-json', {'for': 'json'}
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'stephpy/vim-php-cs-fixer', {'for': 'php'}
-"Plug 'lvht/phpcd.vim', {'for': 'php'}
-Plug 'skywind3000/asyncrun.vim'
-Plug 'anschnapp/move-less'
-Plug 'SirVer/ultisnips'
-Plug 'majutsushi/tagbar'
 
 call plug#end()
 
@@ -333,8 +343,19 @@ autocmd BufEnter * silent! lcd %:p:h
 " Do not show stupid q: window
 map q: :q
 
+
+
 " Don't move on *
 nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
+
+" tab navigation
+nnoremap tm  :tabm<Space>
+nnoremap tx  :tabclose<CR>
+nnoremap th  :tabprev<CR>
+nnoremap tl  :tabnext<CR>
+nnoremap tH  :tabfirst<CR>
+nnoremap tL  :tablast<CR>
+nnoremap tn  :tabnew<CR>
 
 " Time out on key codes but not mappings.
 " Basically this makes terminal Vim work sanely.
@@ -587,3 +608,6 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 nnoremap <C-P> :CtrlP<cr>
 inoremap <C-P> <esc>:CtrlP<cr>
+
+" Go to the file under cursor
+nnoremap gf :Gcd<cr> gf
