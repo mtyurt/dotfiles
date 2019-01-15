@@ -119,7 +119,7 @@ pyclean(){
 ### clean dangling images and finished containers
 dkclean(){
     docker ps -f status=exited | tail -n +2 | awk '{system("docker rm -f "$1)}'
-    docker images | awk '{if ($1 == "<none>"){system("docker rmi -f "$3)}}'
+    docker images | awk '{if ($1 == "<none>" || $2 == "<none>"){system("docker rmi -f "$3)}}'
 }
 
 ## macOS
@@ -184,20 +184,9 @@ bd() {
     command cd -- "$1"
 }
 
-# Change directory to n directories above
-bdc() {
-    if [ "$#" -gt 1 ] ; then
-        printf >&2 'bdc(): Too many arguments\n'
-        return 2
-    fi
-    up=""
-    x=$1
-    while [ $x -gt 0 ]; do
-        up="../$up"
-        x=$(($x-1))
-    done
-    echo "cd $up"
-    command cd $up
+# Change directory to .git root directory above
+cdg() {
+    command cd $(git rev-parse --show-toplevel)
 }
 
 # Create a directory and change into it
