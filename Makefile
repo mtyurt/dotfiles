@@ -10,6 +10,8 @@ all:
 	[ -f ~/.Brewfile ] || ln -s $(PWD)/Brewfile ~/.Brewfile
 	[ -f ~/.gitconfig ] || ln -s $(PWD)/gitconfig ~/.gitconfig
 	[ -f ~/.tmux.conf ] || ln -s $(PWD)/tmuxconf ~/.tmux.conf
+	[ -d ~/.tmux-gitbar ] || git clone git://git@github.com/mtyurt/tmux-gitbar.git ~/.tmux-gitbar
+	[ -f ~/.tmux-gitbar.conf ] || ln -s $(PWD)/tmux-gitbar.conf ~/.tmux-gitbar.conf
 
 clean:
 	[ -f ~/.vimrc ] || rm ~/.vimrc
