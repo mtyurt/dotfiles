@@ -59,6 +59,7 @@
     dff = diff --color-moved
 	ds = diff --color-moved --staged
     cf = "!f() { git commit --fixup=$1; }; f"
+    f = fetch --all --prune
 	today = log --since=00:00:00 --all --no-merges --oneline --author=mtyurt@gmail.com
 	logsince = "!f() { git log --since=$1 --all --no-merges --oneline --author=mtyurt@gmail.com; }; f"
 	branch-name = "!git rev-parse --abbrev-ref HEAD"
