@@ -27,7 +27,15 @@ else
             PS1+="${Gre}\u${RCol}"
         fi
 
-        PS1+="${RCol}: ${Yel}\w${BYel} $ ${RCol}"
+        PS1+="${RCol}: "
+        if [[ -d .git || `git rev-parse --git-dir 2> /dev/null` ]]; then
+            # only show git directory path, omit the parents
+            PS1+="${Yel}~~${PWD#*$(dirname `git rev-parse --show-toplevel`)/}"
+        else
+            PS1+="${Yel}\w"
+
+        fi
+        PS1+="${BYel} $ ${RCol}"
     }
 
     export PROMPT_COMMAND="__prompt_command;/Users/mt/.tmux-gitbar/update-gitbar"
