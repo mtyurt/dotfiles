@@ -32,8 +32,8 @@ bind-key s split-window -v -c '#{pane_current_path}'
 
 # Pressing Ctrl+Shift+Left (will move the current window to the left. Similarly
 # right. No need to use the modifier (C-b).
-bind-key -n C-S-Left swap-window -t -1
-bind-key -n C-S-Right swap-window -t +1
+bind-key S-Left swap-window -t -1
+bind-key S-Right swap-window -t +1
 
 #join pane from different window
 bind-key J command-prompt -p "join pane from:"  "join-pane -s '%%'"
