@@ -2,10 +2,7 @@ call plug#begin('~/.vim/plugged')
 
 " essentials
 Plug 'skywind3000/asyncrun.vim'
-Plug 'Shougo/deoplete.nvim'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'vim-scripts/YankRing.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -15,33 +12,31 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'mileszs/ack.vim'
 Plug 'ggreer/the_silver_searcher'
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'SirVer/ultisnips'
 Plug 'majutsushi/tagbar'
 
 " good to have
 Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 Plug 'terryma/vim-expand-region'
 Plug 'anschnapp/move-less'
 Plug 't9md/vim-choosewin'
 Plug 'fcpg/vim-flattery'
+Plug 'MattesGroeger/vim-bookmarks'
+Plug 'artnez/vim-wipeout'
 
 " syntax, language specific highlighting, etc
 Plug 'vim-syntastic/syntastic'
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'elzr/vim-json', {'for' : 'json'}
 Plug 'fatih/vim-go'
-Plug 'fatih/vim-hclfmt'
+Plug 'fatih/vim-hclfmt', {'for' : 'tf'}
 Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
-Plug 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown', {'for' : 'md'}
 Plug 'hashivim/vim-hashicorp-tools'
-Plug 'elzr/vim-json', {'for': 'json'}
 Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'pearofducks/ansible-vim'
-Plug 'hashivim/vim-vagrant'
 Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
+Plug 'davidhalter/jedi-vim', {'for': 'python'}
 
 " color schemes
 Plug 'tomasr/molokai'
@@ -120,10 +115,12 @@ set viminfo='200
 
 set lazyredraw          " Wait to redraw
 
-if has('persistent_undo')
-  set undofile
-  set undodir=~/.cache/vim
-endif
+" infinite undo
+set undofile
+set undodir=~/.cache/vim
+let s:undos = split(globpath(&undodir, '*'), "\n")
+call filter(s:undos, 'getftime(v:val) < localtime() - (60 * 60 * 24 * 90)')
+call map(s:undos, 'delete(v:val)')
 
 " color
 syntax enable
@@ -154,6 +151,8 @@ autocmd BufNewFile,BufRead *.vim setlocal expandtab shiftwidth=2 tabstop=2
 autocmd BufNewFile,BufRead *.hcl setlocal expandtab shiftwidth=2 tabstop=2
 
 autocmd FileType json setlocal expandtab shiftwidth=2 tabstop=2
+autocmd FileType json syntax match Comment +\/\/.\+$+
+
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 
 augroup filetypedetect
@@ -260,9 +259,8 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Some useful quickfix shortcuts for quickfix
-map <C-n> :cn<CR>
+map <C-c> :cn<CR>
 map <C-m> :cp<CR>
-nnoremap <leader>a :cclose<CR>
 
 " put quickfix window always to the bottom
 autocmd FileType qf wincmd J
@@ -343,7 +341,11 @@ autocmd BufEnter * silent! lcd %:p:h
 " Do not show stupid q: window
 map q: :q
 
+" Toggle alternate buffer
+nnoremap <leader><leader> <c-^>
 
+" Highlight VCS conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Don't move on *
 nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
@@ -397,7 +399,7 @@ au InsertLeave * set nopaste
 
 " ==================== PYTHON ==================== 
 " leader-y to use yapf
-autocmd FileType python nnoremap <leader>y :0,$!yapf<Cr><C-o>
+autocmd FileType python nnoremap <leader>yf :0,$!yapf<Cr><C-o>
 
 " Make buffer modifiable for yapf
 au BufNewFile,BufRead *.py set modifiable
@@ -417,10 +419,21 @@ au BufNewFile,BufRead *.py
 let python_highlight_all=1
 
 highlight LineNr ctermfg=yellow
+" jedi-vim
+let g:jedi#goto_command = "<leader>yg"
+let g:jedi#goto_assignments_command = "<leader>ya"
+let g:jedi#goto_definitions_command = "<leader>yd"
+let g:jedi#documentation_command = "<leader>yi"
+let g:jedi#usages_command = "<leader>yn"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "<leader>yr"
 "
 "===================== PLUGINS ======================
 "
 
+
+" ==================== ansible-vim ====================
+au BufRead,BufNewFile */ansible/*.yml set filetype=yaml.ansible
 " ==================== Fonts ====================
 " set guifont=overpass-mono-regular:h11
 set guifont=DroidSansMono_Nerd_Font:h11
@@ -435,7 +448,7 @@ let g:SimpylFold_fold_import = 1
 autocmd FileType python map <buffer> <leader>l :call Flake8()<CR>
 let g:flake8_show_in_gutter=1  " show
 let g:flake8_show_in_file=1  " show
-autocmd BufWritePost *.py call Flake8()
+" autocmd BufWritePost *.py call Flake8()
 
 highlight link Flake8_Error      Error
 highlight link Flake8_Warning    WarningMsg
@@ -445,26 +458,22 @@ highlight link Flake8_PyFlake    WarningMsg
 
 " ==================== vim-syntastic ====================
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
+" let g:syntastic_check_on_wq = 1
 let g:syntastic_python_checkers = ['flake8']
 " ==================== Fugitive ====================
-vnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>gb :Gblame<CR>
+vnoremap <leader>b :Gblame<CR>
+nnoremap <leader>b :Gblame<CR>
 
 " ==================== vim-go ====================
 let g:go_fmt_fail_silently = 0
 let g:go_fmt_command = "goimports"
 let g:go_list_type = "quickfix"
 let g:go_auto_type_info = 0
-let g:go_def_mode = "guru"
 let g:go_echo_command_info = 1
-let g:go_gocode_autobuild = 0
-let g:go_gocode_unimported_packages = 1
 let g:go_addtags_transform = "camelcase"
 
 let g:go_autodetect_gopath = 1
-let g:go_info_mode = "guru"
-autocmd BufWritePre *.go :GoBuild
+" autocmd BufWritePre *.go :GoBuild
 
 " let g:go_metalinter_autosave = 1
 " let g:go_metalinter_autosave_enabled = ['vet', 'golint']
@@ -525,9 +534,11 @@ let g:ctrlp_max_files=0     " do not limit the number of searchable files
 let g:ctrlp_use_caching = 1
 let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
-let g:ctrlp_match_window = 'bottom,order:btt,max:10,results:10'
+let g:ctrlp_match_window = 'top,order:btt,max:10,results:10'
 let g:ctrlp_buftag_types = {'go' : '--language-force=go --golang-types=ftv'}
 let g:ctrlp_extensions = ['autoignore']
+nnoremap <C-P> :CtrlP<cr>
+inoremap <C-P> <esc>:CtrlP<cr>
 
 " ==================== delimitMate ====================
 let g:delimitMate_expand_cr = 1   
@@ -575,25 +586,91 @@ autocmd CursorHold,CursorHoldI *.md update
 autocmd BufReadPre *.tex setlocal textwidth=80
 autocmd BufReadPre *.tex setlocal cc=80
 
-" ==================== yankring ====================
-let g:yankring_replace_n_pkey = '<C-M>'
-let g:yankring_replace_n_nkey = '<C-N>'
 
+" ===================== coc =======================
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" ==================== deoplete ====================
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
-let g:deoplete#ignore_sources.php = ['phpcd', 'omni']
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
-" ==================== gutentags ====================
-" let g:gutentags_ctags_tagfile = '.git/gutentags'
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[c` and `]c` to navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+
+function! SetupCommandAbbrs(from, to)
+  exec 'cnoreabbrev <expr> '.a:from
+        \ .' ((getcmdtype() ==# ":" && getcmdline() ==# "'.a:from.'")'
+        \ .'? ("'.a:to.'") : ("'.a:from.'"))'
+endfunction
+
+" Use C to open coc config
+call SetupCommandAbbrs('C', 'CocConfig')
+
+" ==================== vim-bookmarks ====================
+let g:bookmark_highlight_lines = 1
+let g:bookmark_no_default_key_mappings = 1
+
+nmap <Leader><Leader> <Plug>BookmarkToggle
+nmap <Leader>i <Plug>BookmarkAnnotate
+nmap <Leader>a <Plug>BookmarkShowAll
+nmap <Leader>j <Plug>BookmarkNext
+nmap <Leader>k <Plug>BookmarkPrev
+nmap <Leader>c <Plug>BookmarkClear
+nmap <Leader>x <Plug>BookmarkClearAll
+nmap <Leader>kk <Plug>BookmarkMoveUp
+nmap <Leader>jj <Plug>BookmarkMoveDown
+nmap <Leader>g <Plug>BookmarkMoveToLine
+
 
 " ==================== AsyncRun ====================
 let g:asyncrun_open = 6
 
-" ==================== UltiSnips ===================
-let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
 
+" ==================== jedi-vim ====================
 " ==================== Various other plugin settings ====================
 
 nmap <C-T> :TagbarToggle<CR>
@@ -606,8 +683,6 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " Replace selected text with C-r
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
-nnoremap <C-P> :CtrlP<cr>
-inoremap <C-P> <esc>:CtrlP<cr>
-
 " Go to the file under cursor
 nnoremap gf :Gcd<cr> gf
+
