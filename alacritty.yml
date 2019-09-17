@@ -41,17 +41,17 @@ draw_bold_text_with_bright_colors: true
 font:
   # The normal (roman) font face to use.
   normal:
-    family: SF Mono
+    family: "Hack Nerd Font"
     style: Regular
 
   # The bold font face
   bold:
-    family: SF Mono
+    family: "Hack Nerd Font"
     style: Bold
 
   # The italic font face
   italic:
-    family: SF Mono
+    family: "Hack Nerd Font"
     style: Italic
 
   # Point size of the font
