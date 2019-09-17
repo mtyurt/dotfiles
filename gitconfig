@@ -59,15 +59,19 @@
     dff = diff --color-moved
 	ds = diff --color-moved --staged
     cf = "!f() { git commit --fixup=$1; }; f"
+    fixup = "!f() { git commit -m\"fixup! $(git log -1 --pretty=%s $1)\"; }; f"
     f = fetch --all --prune
 	today = log --since=00:00:00 --all --no-merges --oneline --author=mtyurt@gmail.com
 	logsince = "!f() { git log --since=$1 --all --no-merges --oneline --author=mtyurt@gmail.com; }; f"
-	branch-name = "!git rev-parse --abbrev-ref HEAD"
+	branch-name = "!f() { printf $(git rev-parse --abbrev-ref HEAD);}; f"
 	remote-branch = rev-parse --abbrev-ref --symbolic-full-name @{u}
 	rho = "!git reset --hard $(git remote-branch)"
 	git = !exec git
+    revise = !git-revise
 	setup-fetching-prs = "!git config --add remote.origin.fetch '+refs/pull/*/head:refs/remotes/origin/pr/*' && git fetch origin"
     delete-merged-branches = "!git branch --merged | grep -v master | grep -v '\\*' | xargs -n 1 git branch -d"
+    diff-branch = "!gdf $1 $2"
+    copy-branch-name = "!git branch-name | pbcopy"
 [rerere]
 	enabled = true
 [mergetool "sourcetree"]
