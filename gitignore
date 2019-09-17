@@ -1,6 +1,7 @@
 **/.flake8
 vim-markdown-preview.html
 .ctrlp
+.ctrlpignore
 tags
 tags.lock
 tags.temp
