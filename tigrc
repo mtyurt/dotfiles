@@ -20,3 +20,7 @@ bind generic J next
 bind generic K previous
 bind generic G move-last-line
 bind status A !?git commit --amend
+
+bind main X !git fixup %(commit)
+bind main R !git rebase --autosquash -i %(commit)~1
+bind generic s view-status
