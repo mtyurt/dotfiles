@@ -1,8 +1,10 @@
 #!/bin/bash
 GREEN='\033[0;32m'
+ORANGE='\033[0;33m'
 NC='\033[0m' # No Color
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:$HOME/.cargo/bin"
+export HISTTIMEFORMAT='%d/%m/%y %T '
 
 # Func to gen PS1 after CMDs
 
@@ -183,6 +185,7 @@ dnsflush(){
 mdedit(){ 
     open -a Mark\ Text $*
 }
+alias preview='open -a Preview'
 
 # Move back up the directory tree to the first directory matching the name
 # https://sanctum.geek.nz/cgit/dotfiles.git/tree/sh/shrc.d/bd.sh
@@ -243,6 +246,12 @@ cdg() {
 mkcd() {
     mkdir -p -- "$1" && command cd -- "$1"
 }
+
+# Find and replace in current directory
+find-and() {
+    printf "replace: ${GREEN}find . -exec sed -i '' -e 's#${ORANGE}pattern${NC}${GREEN}#${ORANGE}replaceto${NC}${GREEN}#g'${NC}\n"
+    printf "delete: ${GREEN}find . -exec sed -i '' -e '/${ORANGE}pattern${GREEN}/d'${NC}\n"
+}
 export LSCOLORS=cxBxhxDxfxhxhxhxhxcxcx
 export CLICOLOR=1
 
@@ -267,7 +276,7 @@ agl(){
 #aliases
 eval $(thefuck --alias damn)
 alias ls='ls -GpF'   # Mac OSX specific
-alias ll='/usr/local/bin/ls_extended -hsl' # Mac OSX specific
+alias ll="/usr/local/bin/ls_extended -hsla" # Mac OSX specific
 
 ##git
 alias gs='git status'
