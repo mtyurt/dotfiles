@@ -3,7 +3,7 @@ GREEN='\033[0;32m'
 ORANGE='\033[0;33m'
 NC='\033[0m' # No Color
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:$HOME/.cargo/bin"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin"
 export HISTTIMEFORMAT='%d/%m/%y %T '
 
 # Func to gen PS1 after CMDs
@@ -44,7 +44,6 @@ else
     }
 
     export PROMPT_COMMAND="__prompt_command;/Users/mt/.tmux-gitbar/update-gitbar"
-#    export PROMPT_COMMAND=/Users/mt/.tmux-gitbar/update-gitbar
 fi
 
 if [ -f /usr/local/share/bash-completion/bash_completion ]; then

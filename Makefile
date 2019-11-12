@@ -5,7 +5,9 @@ all:
 	[ -f ~/.vimrc ] || ln -s $(PWD)/vimrc ~/.vimrc
 	[ -f ~/.config/alacritty/alacritty.yml ] || ln -s $(PWD)/alacritty.yml ~/.config/alacritty/alacritty.yml
 
-	[ -f ~/.bashrc ] || ln -s $(PWD)/bashrc ~/.bashrc
+	# [ -f ~/.bashrc ] || ln -s $(PWD)/bashrc ~/.bashrc
+	[ -f ~/.zshrc ] || ln -s $(PWD)/zshrc ~/.zshrc
+	[ -d ~/.oh-my-zsh/custom/plugins/warhol ] || git clone https://github.com/unixorn/warhol.plugin.zsh.git ~/.dotfiles/zsh-custom/plugins/warhol
 	[ -f ~/.tigrc ] || ln -s $(PWD)/tigrc ~/.tigrc
 	[ -f ~/.Brewfile ] || ln -s $(PWD)/Brewfile ~/.Brewfile
 	[ -f ~/.gitconfig ] || ln -s $(PWD)/gitconfig ~/.gitconfig

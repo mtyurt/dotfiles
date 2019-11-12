@@ -23,6 +23,7 @@
     untracked = cyan
 [diff]
 	 tool = vimdiff
+	noprefix = true
 [difftool]
 	 prompt = false
 [merge]
@@ -87,3 +88,5 @@
 	oldHighlight = red bold 52
 	newNormal = green bold
 	newHighlight = green bold 22
+[oh-my-zsh]
+	hide-status = 1
