@@ -23,4 +23,5 @@ bind status A !?git commit --amend
 
 bind main X !git fixup %(commit)
 bind main R !git rebase --autosquash -i %(commit)~1
+bind main P !?git please
 bind generic s view-status
