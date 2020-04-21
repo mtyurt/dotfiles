@@ -5,7 +5,7 @@ cheat(){
 
 ## done
 d(){
-    echo "$*" >> done.txt
+    echo "$(date) $*" >> done.txt
 }
 
 #aliases

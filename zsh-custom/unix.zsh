@@ -99,8 +99,15 @@ mkcd() {
 
 # Find and replace in current directory
 find-and() {
-    printf "replace: ${GREEN}find . -exec sed -i '' -e 's#${ORANGE}pattern${NC}${GREEN}#${ORANGE}replaceto${NC}${GREEN}#g'${NC}\n"
-    printf "delete: ${GREEN}find . -exec sed -i '' -e '/${ORANGE}pattern${GREEN}/d'${NC}\n"
+    autoload colors && colors
+    for COLOR in GREEN MAGENTA ; do
+        eval $COLOR='%{$fg_no_bold[${(L)COLOR}]%}'  #wrap colours between %{ %} to avoid weird gaps in autocomplete
+        eval BOLD_$COLOR='%{$fg_bold[${(L)COLOR}]%}'
+    done
+    eval RESET='%{$reset_color%}'
+
+    echo "replace: $GREEN find . -exec sed -i '' -e 's#${MAGENTA}pattern${RESET}${GREEN}#${MAGENTA}replaceto${RESET}${GREEN}#g'${RESET}"
+    echo "delete: ${GREEN}find . -exec sed -i '' -e '/${MAGENTA}pattern${GREEN}/d'${RESET}\n"
 }
 
 # ag with less colorful

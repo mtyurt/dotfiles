@@ -8,6 +8,7 @@ dnsflush(){
 
 # sleep after x seconds
 sleepafter() {
+    echo "Sleeping after $* seconds"
     sleep $*
     pmset sleepnow
 

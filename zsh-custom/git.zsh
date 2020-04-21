@@ -7,7 +7,8 @@ gdf () {
 }
 
 # git commit with 50 characters length check
-gcommit () {
+unalias gco
+gco () {
 	len=${#1}
 	if [ $len -gt 50 ]; then
 		echo -n "Message length is $len, greater than 50, are you sure? (y/n): "
