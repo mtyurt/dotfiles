@@ -11,13 +11,13 @@ COMPLETION_WAITING_DOTS="true"
 # ALL FUNCTIONS & ALIASES ARE LOCATED UNDER HERE
 ZSH_CUSTOM=~/.dotfiles/zsh-custom
 
-plugins=(profiles git web-search tmux per-directory-history jira git-prompt colored-man-pages dotenv docker warhol)
+plugins=(profiles git web-search tmux jira git-prompt colored-man-pages dotenv docker warhol)
 
 source $ZSH/oh-my-zsh.sh
 
 ### END --- OHMYZSH setup
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/opt/node@10/bin"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/opt/node@10/bin:/usr/local/opt/postgresql@11/bin:/Users/mt/Library/Python/3.7/bin"
 export HIST_STAMPS='%d/%m/%y %T '
 
 # Senstive functions which are not pushed to Github
@@ -32,3 +32,5 @@ fi
 export EDITOR=vim
 
 export HOSTFILE=$HOME/.hosts
+
+export DYLD_LIBRARY_PATH=/usr/local/opt/openssl/lib:$DYLD_LIBRARY_PATH
