@@ -2,7 +2,7 @@ call plug#begin('~/.vim/plugged')
 
 " essentials
 Plug 'skywind3000/asyncrun.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': 'go'}
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -13,30 +13,36 @@ Plug 'mileszs/ack.vim'
 Plug 'ggreer/the_silver_searcher'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
+Plug 'wellle/targets.vim'
 
 " good to have
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-unimpaired'
 Plug 'terryma/vim-expand-region'
 Plug 'anschnapp/move-less'
 Plug 't9md/vim-choosewin'
 Plug 'fcpg/vim-flattery'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'artnez/vim-wipeout'
+Plug 'soywod/bufmark.vim'
 
 " syntax, language specific highlighting, etc
 Plug 'vim-syntastic/syntastic'
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'elzr/vim-json', {'for' : 'json'}
-Plug 'fatih/vim-go'
-Plug 'fatih/vim-hclfmt', {'for' : 'tf'}
+Plug 'fatih/vim-go', {'do': ':GoInstallBinaries', 'for': 'go'}
 Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
 Plug 'plasticboy/vim-markdown', {'for' : 'md'}
 Plug 'hashivim/vim-hashicorp-tools'
-Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'pearofducks/ansible-vim'
 Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
 Plug 'davidhalter/jedi-vim', {'for': 'python'}
+Plug 'hashivim/vim-terraform', {'for': 'tf'}
+Plug 'juliosueiras/vim-terraform-completion', {'for': 'tf'}
+Plug 'posva/vim-vue', {'for': 'vue'}
+
 
 " color schemes
 Plug 'tomasr/molokai'
@@ -52,7 +58,11 @@ Plug 'vim-scripts/indentpython.vim', {'for': 'python'}
 Plug 'tmhedberg/SimpylFold', {'for': 'python'}
 Plug 'nvie/vim-flake8', {'for': 'python'}
 
+Plug 'vimwiki/vimwiki'
+
 call plug#end()
+
+let g:terraform_fmt_on_save=0
 
 "=====================================================
 "===================== SETTINGS ======================
@@ -106,6 +116,11 @@ set updatetime=300
 
 set pumheight=10             " Completion window max size
 
+" For iTerm
+if has('mouse_sgr')
+    set ttymouse=sgr
+endif
+
 "http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
 set clipboard^=unnamed
 set clipboard^=unnamedplus
@@ -131,10 +146,6 @@ set background=dark
 let g:molokai_original = 1
 colorscheme molokai
 
-" falcon colorscheme
-" colorscheme falcon
-" set termguicolors
-
 
 " open help vertically
 command! -nargs=* -complete=help Help vertical belowright help <args>
@@ -148,18 +159,19 @@ autocmd BufNewFile,BufRead *.ino setlocal noet ts=4 sw=4 sts=4
 autocmd BufNewFile,BufRead *.txt setlocal noet ts=4 sw=4
 autocmd BufNewFile,BufRead *.md setlocal noet ts=4 sw=4
 autocmd BufNewFile,BufRead *.vim setlocal expandtab shiftwidth=2 tabstop=2
-autocmd BufNewFile,BufRead *.hcl setlocal expandtab shiftwidth=2 tabstop=2
 
 autocmd FileType json setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType json syntax match Comment +\/\/.\+$+
 
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
+autocmd BufNewFile,BufRead *.vue setlocal softtabstop=2 shiftwidth=2 tabstop=2 expandtab
+autocmd BufNewFile,BufRead *.js setlocal softtabstop=2 shiftwidth=2 tabstop=2 expandtab
 
 augroup filetypedetect
   autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
   autocmd BufNewFile,BufRead .nginx.conf*,nginx.conf* setf nginx
-  autocmd BufNewFile,BufRead *.hcl setf conf
 augroup END
+
 
 "=====================================================
 "===================== STATUSLINE ====================
@@ -259,7 +271,7 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Some useful quickfix shortcuts for quickfix
-map <C-c> :cn<CR>
+map <S-m> :cn<CR>
 map <C-m> :cp<CR>
 
 " put quickfix window always to the bottom
@@ -270,7 +282,7 @@ augroup quickfix
 augroup END
 
 " Fast saving
-nnoremap <leader>w :w!<cr>
+nnoremap <leader>W :w!<cr>
 nnoremap <silent> <leader>q :q!<CR>
 
 " Center the screen
@@ -434,6 +446,8 @@ let g:jedi#rename_command = "<leader>yr"
 
 " ==================== ansible-vim ====================
 au BufRead,BufNewFile */ansible/*.yml set filetype=yaml.ansible
+let g:ansible_unindent_after_newline = 1
+let g:ansible_name_highlight = 'd'
 " ==================== Fonts ====================
 " set guifont=overpass-mono-regular:h11
 set guifont=DroidSansMono_Nerd_Font:h11
@@ -470,13 +484,12 @@ let g:go_fmt_command = "goimports"
 let g:go_list_type = "quickfix"
 let g:go_auto_type_info = 0
 let g:go_echo_command_info = 1
-let g:go_addtags_transform = "camelcase"
+
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 
 let g:go_autodetect_gopath = 1
 " autocmd BufWritePre *.go :GoBuild
-
-" let g:go_metalinter_autosave = 1
-" let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 
 let g:go_highlight_space_tab_error = 0
 let g:go_highlight_array_whitespace_error = 0
@@ -486,6 +499,7 @@ let g:go_highlight_build_constraints = 1
 let g:go_highlight_types = 0
 
 let g:go_modifytags_transform = 'camelcase'
+let g:go_addtags_transform = "camelcase"
 
 nmap <C-g> :GoDecls<cr>
 imap <C-g> <esc>:<C-u>GoDecls<cr>
@@ -582,73 +596,69 @@ au BufNewFile,BufRead *.md
 
 autocmd CursorHold,CursorHoldI *.md update
 
-" ==================== tex ====================
-autocmd BufReadPre *.tex setlocal textwidth=80
-autocmd BufReadPre *.tex setlocal cc=80
+" " ===================== coc =======================
+" " Use tab for trigger completion with characters ahead and navigate.
+" " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
 
-" ===================== coc =======================
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" " Use <c-space> to trigger completion.
+" inoremap <silent><expr> <c-space> coc#refresh()
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" " Coc only does snippet and additional edit on confirm.
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+" " Use `[c` and `]c` to navigate diagnostics
+" nmap <silent> [c <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" " Remap keys for gotos
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
 
-" Use `[c` and `]c` to navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
+" " Use K to show documentation in preview window
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" " Remap for rename current word
+" nmap <leader>rn <Plug>(coc-rename)
 
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   else
+"     call CocAction('doHover')
+"   endif
+" endfunction
 
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+" " Highlight symbol under cursor on CursorHold
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+" " autocmd FileType go CursorHold * silent call CocActionAsync('highlight')
 
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" " Using CocList
+" " Show all diagnostics
+" nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" " Find symbol of current document
+" nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 
-" Using CocList
-" Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" function! SetupCommandAbbrs(from, to)
+"   exec 'cnoreabbrev <expr> '.a:from
+"         \ .' ((getcmdtype() ==# ":" && getcmdline() ==# "'.a:from.'")'
+"         \ .'? ("'.a:to.'") : ("'.a:from.'"))'
+" endfunction
 
-function! SetupCommandAbbrs(from, to)
-  exec 'cnoreabbrev <expr> '.a:from
-        \ .' ((getcmdtype() ==# ":" && getcmdline() ==# "'.a:from.'")'
-        \ .'? ("'.a:to.'") : ("'.a:from.'"))'
-endfunction
-
-" Use C to open coc config
-call SetupCommandAbbrs('C', 'CocConfig')
+" " Use C to open coc config
+" call SetupCommandAbbrs('C', 'CocConfig')
 
 " ==================== vim-bookmarks ====================
 let g:bookmark_highlight_lines = 1
@@ -686,3 +696,5 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 " Go to the file under cursor
 nnoremap gf :Gcd<cr> gf
 
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
