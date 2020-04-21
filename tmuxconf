@@ -48,7 +48,7 @@ unbind r
 bind r source-file ~/.tmux.conf \; display "Reloaded!"
 
 # Copy-paste integration
-set-option -g default-command "reattach-to-user-namespace -l $SHELL"
+# set-option -g default-command "reattach-to-user-namespace -l $SHELL"
 
 # Use vim keybindings in copy mode
 set-window-option -g mode-keys vi
@@ -85,11 +85,11 @@ bind-key -r K resize-pane -U 5
 bind-key -r H resize-pane -L 5
 bind-key -r L resize-pane -R 5
 
-source-file "$HOME/.tmux-gitbar/tmux-gitbar.tmux"
+# source-file "$HOME/.tmux-gitbar/tmux-gitbar.tmux"
 
-set-hook -g window-pane-changed 'run-shell $HOME/.tmux-gitbar/update-gitbar'
-set-hook -g session-window-changed 'run-shell $HOME/.tmux-gitbar/update-gitbar'
-set-hook -g session-changed 'run-shell $HOME/.tmux-gitbar/update-gitbar'
+# set-hook -g window-pane-changed 'run-shell $HOME/.tmux-gitbar/update-gitbar'
+# set-hook -g session-window-changed 'run-shell $HOME/.tmux-gitbar/update-gitbar'
+# set-hook -g session-changed 'run-shell $HOME/.tmux-gitbar/update-gitbar'
 
 # Navigate panes
 bind -r h select-pane -L
@@ -109,33 +109,33 @@ bind-key C-c clear-history
 # This tmux statusbar config was created by tmuxline.vim
 # on Wed, 25 Nov 2015
 
-set -g status-bg "colour236"
-set -g message-command-fg "colour231"
-set -g status-justify "left"
-set -g status-left-length "100"
-set -g status "on"
-set -g pane-active-border-fg "colour148"
-set -g message-bg "colour240"
-set -g status-right-length "100"
-set -g status-right-attr "none"
-set -g message-fg "colour231"
-set -g message-command-bg "colour240"
-set -g status-attr "none"
-set -g pane-border-fg "colour240"
-set -g status-left-attr "none"
-setw -g window-status-fg "colour245"
-setw -g window-status-attr "none"
-setw -g window-status-activity-bg "colour236"
-setw -g window-status-activity-attr "none"
-setw -g window-status-activity-fg "colour148"
-setw -g window-status-separator ""
-setw -g window-status-bg "colour236"
+# set -g status-bg "colour236"
+# set -g message-command-fg "colour231"
+# set -g status-justify "left"
+# set -g status-left-length "100"
+# set -g status "on"
+# set -g pane-active-border-fg "colour148"
+# set -g message-bg "colour240"
+# set -g status-right-length "100"
+# set -g status-right-attr "none"
+# set -g message-fg "colour231"
+# set -g message-command-bg "colour240"
+# set -g status-attr "none"
+# set -g pane-border-fg "colour240"
+# set -g status-left-attr "none"
+# setw -g window-status-fg "colour245"
+# setw -g window-status-attr "none"
+# setw -g window-status-activity-bg "colour236"
+# setw -g window-status-activity-attr "none"
+# setw -g window-status-activity-fg "colour148"
+# setw -g window-status-separator ""
+# setw -g window-status-bg "colour236"
 set -g status-left "#{prefix_highlight}#[fg=colour22,bg=colour148,bold] #S #[fg=colour148,bg=colour236,nobold,nounderscore,noitalics]"
 set -g status-right "#[fg=colour240,bg=colour236,nobold,nounderscore,noitalics]#[fg=colour250,bg=colour240] %Y-%m-%d %H:%M #[fg=colour252,bg=colour240,nobold,nounderscore,noitalics]#[fg=colour241,bg=colour252] #h "
 setw -g window-status-format "#[fg=colour245,bg=colour236] #I #[fg=colour245,bg=colour236]#W "
 setw -g window-status-current-format "#[fg=colour236,bg=colour240,nobold,nounderscore,noitalics]#[fg=colour231,bg=colour240] #I #[fg=colour231,bg=colour240]#W #[fg=colour240,bg=colour236,nobold,nounderscore,noitalics]"
 
-source-file ~/.dotfiles/falcon.tmux.conf
+# source-file ~/.dotfiles/falcon.tmux.conf
 
 set -g status-right " #[fg=#89898c,bg=#3e3e40]│ #[fg=yellow,bg=#3e3e40]$USER #[fg=#89898c,bg=#3e3e40]│#[fg=green,bg=#3e3e40] Batt: #{battery_percentage} #[fg=#89898c,bg=#3e3e40]│#[fg=white,bg=#3e3e40]%d/%m/%Y %H:%M "
 
@@ -148,6 +148,7 @@ set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-battery'
 
+setw -g aggressive-resize off
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
 
@@ -185,4 +186,3 @@ run '~/.tmux/plugins/tpm/tpm'
 # when I press CMD + d in iterm, I send the sequence 0x06 0x76,
 # which tmux inteprets it as opening a new pane. 
 ###############################################
-
