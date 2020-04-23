@@ -15,6 +15,15 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'wellle/targets.vim'
 
+" status line
+Plug 'itchyny/lightline.vim'
+Plug 'sainnhe/artify.vim'
+Plug 'itchyny/vim-gitbranch'
+Plug 'macthecadillac/lightline-gitdiff'
+Plug 'maximbaz/lightline-ale'
+Plug 'albertomontesg/lightline-asyncrun'
+Plug 'ryanoasis/vim-devicons'
+
 " good to have
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'tpope/vim-commentary'
@@ -46,7 +55,7 @@ Plug 'posva/vim-vue', {'for': 'vue'}
 
 " color schemes
 Plug 'tomasr/molokai'
-Plug 'fenetikm/falcon'
+Plug 'sainnhe/edge'
 
 " git
 Plug 'tpope/vim-fugitive'
@@ -140,11 +149,25 @@ call map(s:undos, 'delete(v:val)')
 " color
 syntax enable
 set t_Co=256
-
-let g:rehash256 = 1
 set background=dark
-let g:molokai_original = 1
-colorscheme molokai
+
+" let g:rehash256 = 1
+" set background=dark
+" let g:molokai_original = 1
+" colorscheme molokai
+
+if exists('+termguicolors')
+  let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
+
+" the configuration options should be placed before `colorscheme edge`
+let g:edge_style = 'neon'
+let g:edge_disable_italic_comment = 1
+
+colorscheme edge
 
 
 " open help vertically
@@ -176,87 +199,253 @@ augroup END
 "=====================================================
 "===================== STATUSLINE ====================
 
-let s:modes = {
-      \ 'n': 'NORMAL', 
-      \ 'i': 'INSERT', 
-      \ 'R': 'REPLACE', 
-      \ 'v': 'VISUAL', 
-      \ 'V': 'V-LINE', 
-      \ "\<C-v>": 'V-BLOCK',
-      \ 'c': 'COMMAND',
-      \ 's': 'SELECT', 
-      \ 'S': 'S-LINE', 
-      \ "\<C-s>": 'S-BLOCK', 
-      \ 't': 'TERMINAL'
-      \}
-
-let s:prev_mode = ""
-function! StatusLineMode()
-  let cur_mode = get(s:modes, mode(), '')
-
-  " do not update higlight if the mode is the same
-  if cur_mode == s:prev_mode
-    return cur_mode
+function! Devicons_Filetype()
+  " return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() . ' ' . &filetype : 'no ft') : ''
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+function! Devicons_Fileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
+function! Artify_active_tab_num(n) abort
+  return Artify(a:n, 'bold')." \ue0bb"
+endfunction
+function! Tab_num(n) abort
+  return a:n." \ue0bb"
+endfunction
+function! Artify_inactive_tab_num(n) abort
+  return Artify(a:n, 'double_struck')." \ue0bb"
+endfunction
+function! Artify_lightline_tab_filename(s) abort
+  return Artify(lightline#tab#filename(a:s), 'monospace')
+endfunction
+function! Artify_lightline_mode() abort
+  return Artify(lightline#mode(), 'monospace')
+endfunction
+function! Artify_line_percent() abort
+  return Artify(string((100*line('.'))/line('$')), 'bold')
+endfunction
+function! Artify_line_num() abort
+  return Artify(string(line('.')), 'bold')
+endfunction
+function! Artify_col_num() abort
+  return Artify(string(getcurpos()[2]), 'bold')
+endfunction
+function! Artify_gitbranch() abort
+  if gitbranch#name() !=# ''
+    return Artify(gitbranch#name(), 'monospace')." \ue725"
+  else
+    return "\ue61b"
   endif
+endfunction
+set laststatus=2  " Basic
+" set noshowmode  " Disable show mode info
+augroup lightlineCustom
+  autocmd!
+  autocmd BufWritePost * call lightline_gitdiff#query_git() | call lightline#update()
+augroup END
+let g:lightline = {}
+let g:lightline.separator = { 'left': "\ue0b8", 'right': "\ue0be" }
+let g:lightline.subseparator = { 'left': "\ue0b9", 'right': "\ue0b9" }
+let g:lightline.tabline_separator = { 'left': "\ue0bc", 'right': "\ue0ba" }
+let g:lightline.tabline_subseparator = { 'left': "\ue0bb", 'right': "\ue0bb" }
+let g:lightline#ale#indicator_checking = "\uf110"
+let g:lightline#ale#indicator_warnings = "\uf529"
+let g:lightline#ale#indicator_errors = "\uf00d"
+let g:lightline#ale#indicator_ok = "\uf00c"
+let g:lightline_gitdiff#indicator_added = '+'
+let g:lightline_gitdiff#indicator_deleted = '-'
+let g:lightline_gitdiff#indicator_modified = '*'
+let g:lightline_gitdiff#min_winwidth = '70'
+let g:lightline#asyncrun#indicator_none = ''
+let g:lightline#asyncrun#indicator_run = 'Running...'
 
-  if cur_mode == "NORMAL"
-    exe 'hi! StatusLine ctermfg=236'
-    exe 'hi! myModeColor cterm=bold ctermbg=148 ctermfg=22'
-  elseif cur_mode == "INSERT"
-    exe 'hi! myModeColor cterm=bold ctermbg=23 ctermfg=231'
-  elseif cur_mode == "VISUAL" || cur_mode == "V-LINE" || cur_mode == "V_BLOCK"
-    exe 'hi! StatusLine ctermfg=236'
-    exe 'hi! myModeColor cterm=bold ctermbg=208 ctermfg=88'
+function! CtrlPMark()
+  if expand('%:t') =~ 'ControlP'
+    call lightline#link('iR'[g:lightline.ctrlp_regex])
+    return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
+          \ , g:lightline.ctrlp_next], 0)
+  else
+    return ''
   endif
-
-  let s:prev_mode = cur_mode
-  return cur_mode
 endfunction
 
-function! StatusLineFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+function! LightLineModified()
+  return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
-function! StatusLinePercent()
-  return (100 * line('.') / line('$')) . '%'
+function! LightLineReadonly()
+  return &ft !~? 'help' && &readonly ? 'RO' : ''
 endfunction
 
-function! StatusLineLeftInfo()
-  let branch = fugitive#head()
-  let filename = '' != expand('%:t') ? expand('%:t') : '[No Name]'
-  if branch !=# ''
-    return printf("%s | %s", branch, filename)
-  endif
-  return filename
+function! LightLineFilename()
+  let fname = expand('%:t')
+  return fname == 'ControlP' ? g:lightline.ctrlp_item :
+        \ fname == '__Tagbar__' ? g:lightline.fname :
+        \ fname =~ '__Gundo\|NERD_tree' ? '' :
+        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \ &ft == 'unite' ? unite#get_status_string() :
+        \ &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+        \ ('' != fname ? fname : '[No Name]') .
+        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
 
-exe 'hi! myInfoColor ctermbg=240 ctermfg=252'
+" [ 'readonly', 'filename', 'modified', 'fileformat', 'devicons_filetype' ] ],
 
-" start building our statusline
-set statusline=
+let g:lightline.active = {
+    \ 'left': [ [ 'artify_mode', 'paste' ],
+    \           [ 'filename', 'fileformat', 'devicons_filetype', 'ctrlpmark' ] ],
+    \ 'right': [ [ 'artify_lineinfo' ],
+    \           [ 'syntastic' ],
+    \           [ 'gitstatus' ] ]
+    \ }
+let g:lightline.inactive = {
+    \ 'left': [ [ 'filename' , 'modified', 'fileformat', 'devicons_filetype' ]],
+    \ 'right': [ [ 'artify_lineinfo' ] ]
+    \ }
+let g:lightline.tabline = {
+    \ 'left': [ [ 'vim_logo', 'tabs' ] ],
+    \ 'right': []
+    \ }
+let g:lightline.tab = {
+    \ 'active': [ 'artify_activetabnum', 'artify_filename', 'modified' ],
+    \ 'inactive': [ 'artify_inactivetabnum', 'filename', 'modified' ] }
 
-" mode with custom colors
-set statusline+=%#myModeColor#
-set statusline+=%{StatusLineMode()}
-set statusline+=%*
+function! GitStatus()
+    let changes = lightline_gitdiff#get_status()
+    let branch = Artify_gitbranch()
+    return branch . changes
+endfunction
 
-" left information bar (after mode)
-set statusline+=%#myInfoColor#
-set statusline+=\ %{StatusLineLeftInfo()}
-set statusline+=\ %*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
-" go command status (requires vim-go)
-set statusline+=%#goStatuslineColor#
-"set statusline+=%{go#statusline#Show()}
-set statusline+=%*
+let g:lightline.component_expand = {
+      \ 'syntastic': 'SyntasticStatusLineFlag',
+      \ }
 
-" right section separator
-set statusline+=%=
+let g:lightline.component_expand = {
+      \ 'syntastic': 'error',
+      \ }
 
-" filetype, percentage, line number and column number
-set statusline+=%#myInfoColor#
-set statusline+=\ %{StatusLineFiletype()}\ %{StatusLinePercent()}\ %l:%v
-set statusline+=\ %*
+let g:lightline.component = {
+      \ 'artify_mode': '%{Artify_lightline_mode()}',
+      \ 'artify_lineinfo': "%2{Artify_line_percent()}\uf295 %3{Artify_line_num()}:%-2{Artify_col_num()}",
+      \ 'gitstatus' : '%{GitStatus()}',
+      \ 'bufinfo': '%{bufname("%")}:%{bufnr("%")}',
+      \ 'vim_logo': "\ue7c5",
+      \ 'mode': '%{lightline#mode()}',
+      \ 'absolutepath': '%F',
+      \ 'relativepath': '%f',
+      \ 'filesize': "%{HumanSize(line2byte('$') + len(getline('$')))}",
+      \ 'fileencoding': '%{&fenc!=#""?&fenc:&enc}',
+      \ 'fileformat': '%{&fenc!=#""?&fenc:&enc}[%{&ff}]',
+      \ 'filetype': '%{&ft!=#""?&ft:"no ft"}',
+      \ 'modified': '%M',
+      \ 'bufnum': '%n',
+      \ 'paste': '%{&paste?"PASTE":""}',
+      \ 'readonly': '%R',
+      \ 'charvalue': '%b',
+      \ 'charvaluehex': '%B',
+      \ 'percent': '%2p%%',
+      \ 'percentwin': '%P',
+      \ 'spell': '%{&spell?&spelllang:""}',
+      \ 'lineinfo': '%2p%% %3l:%-2v',
+      \ 'line': '%l',
+      \ 'column': '%c',
+      \ 'close': '%999X X ',
+      \ 'winnr': '%{winnr()}'
+      \ }
+let g:lightline.component_function = {
+      \ 'devicons_filetype': 'Devicons_Filetype',
+      \ 'devicons_fileformat': 'Devicons_Fileformat',
+      \ 'filename': 'LightLineFilename',
+      \  'ctrlpmark': 'CtrlPMark'
+      \ }
+"
+"let s:modes = {
+"      \ 'n': 'NORMAL', 
+"      \ 'i': 'INSERT', 
+"      \ 'R': 'REPLACE', 
+"      \ 'v': 'VISUAL', 
+"      \ 'V': 'V-LINE', 
+"      \ "\<C-v>": 'V-BLOCK',
+"      \ 'c': 'COMMAND',
+"      \ 's': 'SELECT', 
+"      \ 'S': 'S-LINE', 
+"      \ "\<C-s>": 'S-BLOCK', 
+"      \ 't': 'TERMINAL'
+"      \}
+
+"let s:prev_mode = ""
+"function! StatusLineMode()
+"  let cur_mode = get(s:modes, mode(), '')
+
+"  " do not update higlight if the mode is the same
+"  if cur_mode == s:prev_mode
+"    return cur_mode
+"  endif
+
+"  if cur_mode == "NORMAL"
+"    exe 'hi! StatusLine ctermfg=236'
+"    exe 'hi! myModeColor cterm=bold ctermbg=148 ctermfg=22'
+"  elseif cur_mode == "INSERT"
+"    exe 'hi! myModeColor cterm=bold ctermbg=23 ctermfg=231'
+"  elseif cur_mode == "VISUAL" || cur_mode == "V-LINE" || cur_mode == "V_BLOCK"
+"    exe 'hi! StatusLine ctermfg=236'
+"    exe 'hi! myModeColor cterm=bold ctermbg=208 ctermfg=88'
+"  endif
+
+"  let s:prev_mode = cur_mode
+"  return cur_mode
+"endfunction
+
+"function! StatusLineFiletype()
+"  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+"endfunction
+
+"function! StatusLinePercent()
+"  return (100 * line('.') / line('$')) . '%'
+"endfunction
+
+"function! StatusLineLeftInfo()
+"  let branch = fugitive#head()
+"  let filename = '' != expand('%:t') ? expand('%:t') : '[No Name]'
+"  if branch !=# ''
+"    return printf("%s | %s", branch, filename)
+"  endif
+"  return filename
+"endfunction
+
+"exe 'hi! myInfoColor ctermbg=240 ctermfg=252'
+
+"" start building our statusline
+"set statusline=
+
+"" mode with custom colors
+"set statusline+=%#myModeColor#
+"set statusline+=%{StatusLineMode()}
+"set statusline+=%*
+
+"" left information bar (after mode)
+"set statusline+=%#myInfoColor#
+"set statusline+=\ %{StatusLineLeftInfo()}
+"set statusline+=\ %*
+
+"" go command status (requires vim-go)
+"set statusline+=%#goStatuslineColor#
+""set statusline+=%{go#statusline#Show()}
+"set statusline+=%*
+
+"" right section separator
+"set statusline+=%=
+
+"" filetype, percentage, line number and column number
+"set statusline+=%#myInfoColor#
+"set statusline+=\ %{StatusLineFiletype()}\ %{StatusLinePercent()}\ %l:%v
+"set statusline+=\ %*
 
 "=====================================================
 "===================== MAPPINGS ======================
@@ -479,9 +668,8 @@ vnoremap <leader>b :Gblame<CR>
 nnoremap <leader>b :Gblame<CR>
 
 " ==================== vim-go ====================
-let g:go_fmt_fail_silently = 0
+let g:go_fmt_fail_silently = 1
 let g:go_fmt_command = "goimports"
-let g:go_list_type = "quickfix"
 let g:go_auto_type_info = 0
 let g:go_echo_command_info = 1
 
