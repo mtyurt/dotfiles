@@ -189,7 +189,6 @@ augroup END
 "===================== STATUSLINE ====================
 
 function! Devicons_Filetype()
-  " return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() . ' ' . &filetype : 'no ft') : ''
   return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
 endfunction
 function! Devicons_Fileformat()
@@ -625,12 +624,36 @@ let g:jedi#rename_command = "<leader>yr"
 
 
 " ==================== ansible-vim ====================
+
 au BufRead,BufNewFile */ansible/*.yml set filetype=yaml.ansible
+
 let g:ansible_unindent_after_newline = 1
-let g:ansible_name_highlight = 'd'
+let g:ansible_name_highlight = 'b'
+let g:ansible_yamlKeyName = 'yamlKey'
+let g:ansible_attribute_highlight = 'ab'
+let g:ansible_extra_keywords_highlight = 1
+
+let g:ansible_goto_role_paths = './roles,../_common/roles'
+
+function! FindAnsibleRoleUnderCursor()
+  if exists("g:ansible_goto_role_paths")
+    let l:role_paths = g:ansible_goto_role_paths
+  else
+    let l:role_paths = "./roles"
+  endif
+  let l:tasks_main = expand("<cfile>") . "/tasks/main.yml"
+  let l:found_role_path = findfile(l:tasks_main, l:role_paths)
+  if l:found_role_path == ""
+    echo l:tasks_main . " not found"
+  else
+    execute "edit " . fnameescape(l:found_role_path)
+  endif
+endfunction
+
+au BufRead,BufNewFile */ansible/*.yml nnoremap <leader>gr :call FindAnsibleRoleUnderCursor()<CR>
+au BufRead,BufNewFile */ansible/*.yml vnoremap <leader>gr :call FindAnsibleRoleUnderCursor()<CR>
+
 " ==================== Fonts ====================
-" set guifont=overpass-mono-regular:h11
-set guifont=DroidSansMono_Nerd_Font:h11
 
 
 " ==================== SimplyFold ====================
@@ -873,7 +896,6 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 " Go to the file under cursor
-nnoremap gf :Gcd<cr> gf
 
 let g:vimwiki_list = [{'path': '~/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
