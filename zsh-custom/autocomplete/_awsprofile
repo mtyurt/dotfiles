@@ -1,0 +1,13 @@
+#compdef awsprofile
+
+# completion is kinda slow, operating on the files directly would be faster but more work
+#
+
+local -a profiles
+#profiles=(`aws configure list-profiles | grep --color=never ^$`)
+
+profiles=(`aws configure list-profiles`)
+
+# _describe 'command' $profiles
+#
+_alternative "arg:def:($profiles)"
