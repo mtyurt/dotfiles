@@ -116,4 +116,4 @@ agl(){
 }
 
 # aliases
-alias grep='grep --color=auto'
+alias grep='ggrep --color=auto'
