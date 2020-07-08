@@ -502,8 +502,8 @@ map <F2> :set paste<CR>i
 au InsertLeave * set nopaste
 
 " ==================== PYTHON ==================== 
-" leader-y to use yapf
-autocmd FileType python nnoremap <leader>yf :0,$!yapf<Cr><C-o>
+" leader-yf to use yapf
+autocmd FileType python nnoremap <leader>yf :0,$! /Users/mt/Library/Python/3.8/bin/yapf<Cr><C-o>
 
 " Make buffer modifiable for yapf
 au BufNewFile,BufRead *.py set modifiable
@@ -546,7 +546,7 @@ let g:ansible_yamlKeyName = 'yamlKey'
 let g:ansible_attribute_highlight = 'ab'
 let g:ansible_extra_keywords_highlight = 1
 
-let g:ansible_goto_role_paths = './roles,../_common/roles'
+let g:ansible_goto_role_paths = './roles,../_common/roles,../roles,../../_common/roles'
 
 function! FindAnsibleRoleUnderCursor()
   if exists("g:ansible_goto_role_paths")
