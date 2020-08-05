@@ -36,6 +36,7 @@ Plug 'fcpg/vim-flattery'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'artnez/vim-wipeout'
 Plug 'soywod/bufmark.vim'
+Plug 'itchyny/vim-cursorword'
 
 " syntax, language specific highlighting, etc
 Plug 'vim-syntastic/syntastic'
