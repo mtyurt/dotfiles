@@ -37,6 +37,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'artnez/vim-wipeout'
 Plug 'soywod/bufmark.vim'
 Plug 'itchyny/vim-cursorword'
+Plug 'mbbill/undotree'
 
 " syntax, language specific highlighting, etc
 Plug 'vim-syntastic/syntastic'
@@ -454,6 +455,9 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Don't move on *
 nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
+
+" Search project for current word
+map <leader>* :ag <cword> <CR><CR>
 
 " tab navigation
 nnoremap tm  :tabm<Space>
