@@ -45,9 +45,21 @@
 	excludesfile = ~/.dotfiles/gitignore
 	trustctime = false
 	hooksPath = ~/.dotfiles/githooks
-	pager = delta --plus-color="#012800" --minus-color="#340001" --theme='Monokai Extended'
+	pager = delta
+
 [interactive]
     diffFilter = delta --color-only
+
+[delta]
+    line-numbers = true
+    features = line-numbers decorations
+    whitespace-error-style = 22 reverse
+
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
+
 [rebase]
 	autostash = true
 [alias]
@@ -75,6 +87,7 @@
     delete-merged-branches = "!git branch --merged | grep -v master | grep -v '\\*' | xargs -n 1 git branch -d"
     diff-branch = "!gdf $1 $2"
     copy-branch-name = "!git branch-name | pbcopy"
+    wip = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads
 [rerere]
 	enabled = true
 [mergetool "sourcetree"]
@@ -92,3 +105,5 @@
 	newHighlight = green bold 22
 [oh-my-zsh]
 	hide-status = 1
+[pull]
+	rebase = true
