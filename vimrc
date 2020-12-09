@@ -38,6 +38,8 @@ Plug 'artnez/vim-wipeout'
 Plug 'soywod/bufmark.vim'
 Plug 'itchyny/vim-cursorword'
 Plug 'mbbill/undotree'
+Plug 'camspiers/animate.vim'
+Plug 'camspiers/lens.vim'
 
 " syntax, language specific highlighting, etc
 Plug 'vim-syntastic/syntastic'
@@ -53,6 +55,7 @@ Plug 'davidhalter/jedi-vim', {'for': 'python'}
 Plug 'hashivim/vim-terraform', {'for': 'tf'}
 Plug 'juliosueiras/vim-terraform-completion', {'for': 'tf'}
 Plug 'ingydotnet/yaml-vim'
+Plug 'isobit/vim-caddyfile', {'for': 'Caddyfile'}
 
 
 " color schemes
@@ -68,7 +71,7 @@ Plug 'vim-scripts/indentpython.vim', {'for': 'python'}
 Plug 'tmhedberg/SimpylFold', {'for': 'python'}
 Plug 'nvie/vim-flake8', {'for': 'python'}
 
-Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki', {'for': 'vimwiki'}
 
 call plug#end()
 
@@ -463,6 +466,10 @@ nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(st
 " Search project for current word
 map <leader>* :ag <cword> <CR><CR>
 
+" Move visual selection
+vnoremap J :m '>+1<cr>gv=gv
+vnoremap K :m '<-2<cr>gv=gv
+
 " tab navigation
 nnoremap tm  :tabm<Space>
 nnoremap tx  :tabclose<CR>
@@ -663,7 +670,7 @@ augroup go
   autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
 augroup END
 
-au filetype go inoremap <buffer> . .<C-x><C-o>
+" au filetype go inoremap <buffer> . .<C-x><C-o>
 
 " ==================== CtrlP ====================
 let g:ctrlp_cmd = 'CtrlPMRU'
@@ -741,8 +748,6 @@ nmap <Leader>g <Plug>BookmarkMoveToLine
 " ==================== AsyncRun ====================
 let g:asyncrun_open = 6
 
-
-" ==================== jedi-vim ====================
 " ==================== Various other plugin settings ====================
 
 nmap <C-T> :TagbarToggle<CR>
@@ -753,9 +758,7 @@ nmap  -  <Plug>(choosewin)
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " Replace selected text with C-r
-vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
-
-" Go to the file under cursor
+vnoremap <C-r> "hy:%s/<C-r>h/%s/gc<left><left><left>
 
 let g:vimwiki_list = [{'path': '~/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
