@@ -21,7 +21,7 @@ fpath=(~/.dotfiles/zsh-custom/autocomplete/ $fpath)
 
 autoload -U compinit && compinit
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/opt/node@10/bin:/usr/local/opt/postgresql@11/bin:/Users/mt/Library/Python/3.7/bin"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/opt/node@10/bin:/usr/local/opt/postgresql@11/bin: /usr/local/opt/python@3.9/libexec/bin"
 export HIST_STAMPS='%d/%m/%y %T '
 
 # Senstive functions which are not pushed to Github
@@ -43,4 +43,3 @@ if [ ! "$TMUX" = "" ]; then export TERM=xterm-256color; fi
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
-export PATH="/usr/local/opt/python@3.8/bin:$PATH"
