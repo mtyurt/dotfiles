@@ -107,3 +107,7 @@
 	hide-status = 1
 [pull]
 	rebase = true
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+[init]
+	defaultBranch = main
