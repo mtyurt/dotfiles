@@ -21,7 +21,7 @@ fpath=(~/.dotfiles/zsh-custom/autocomplete/ $fpath)
 
 autoload -U compinit && compinit
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/opt/node@10/bin:/usr/local/opt/postgresql@11/bin: /usr/local/opt/python@3.9/libexec/bin"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/opt/postgresql@11/bin:/usr/local/opt/python@3.8/libexec/bin:/Users/mt/Library/Python/3.8/bin:/usr/local/opt/openjdk@11/bin:/usr/local/opt/node@14/bin"
 export HIST_STAMPS='%d/%m/%y %T '
 
 # Senstive functions which are not pushed to Github
@@ -43,3 +43,6 @@ if [ ! "$TMUX" = "" ]; then export TERM=xterm-256color; fi
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
+
+ [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
