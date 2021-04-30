@@ -14,6 +14,8 @@ Plug 'ggreer/the_silver_searcher'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'wellle/targets.vim'
+Plug 'dart-lang/dart-vim-plugin', {'for': 'dart'}
+Plug 'thosakwe/vim-flutter', {'for': 'dart'}
 
 " status line
 Plug 'itchyny/lightline.vim'
@@ -29,6 +31,7 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-surround'
 Plug 'terryma/vim-expand-region'
 Plug 'anschnapp/move-less'
 Plug 't9md/vim-choosewin'
@@ -38,8 +41,7 @@ Plug 'artnez/vim-wipeout'
 Plug 'soywod/bufmark.vim'
 Plug 'itchyny/vim-cursorword'
 Plug 'mbbill/undotree'
-Plug 'camspiers/animate.vim'
-Plug 'camspiers/lens.vim'
+Plug 'junegunn/vim-peekaboo'
 
 " syntax, language specific highlighting, etc
 Plug 'vim-syntastic/syntastic'
@@ -183,7 +185,9 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd BufNewFile,BufRead *.vue setlocal softtabstop=2 shiftwidth=2 tabstop=2 expandtab
-autocmd BufNewFile,BufRead *.js setlocal softtabstop=2 shiftwidth=2 tabstop=2 expandtab
+autocmd BufNewFile,BufRead *.vue setlocal softtabstop=2 shiftwidth=2 tabstop=2 expandtab
+autocmd BufNewFile,BufRead *.dart setlocal softtabstop=2 shiftwidth=2 tabstop=2 expandtab
+autocmd BufNewFile,BufRead *.ts setlocal softtabstop=2 shiftwidth=2 tabstop=2 expandtab
 
 augroup filetypedetect
   autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
