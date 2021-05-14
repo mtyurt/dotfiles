@@ -14,8 +14,10 @@ Plug 'ggreer/the_silver_searcher'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'wellle/targets.vim'
-Plug 'dart-lang/dart-vim-plugin', {'for': 'dart'}
-Plug 'thosakwe/vim-flutter', {'for': 'dart'}
+Plug 'dense-analysis/ale'
+Plug 'ycm-core/YouCompleteMe'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " status line
 Plug 'itchyny/lightline.vim'
@@ -44,7 +46,7 @@ Plug 'mbbill/undotree'
 Plug 'junegunn/vim-peekaboo'
 
 " syntax, language specific highlighting, etc
-Plug 'vim-syntastic/syntastic'
+" Plug 'vim-syntastic/syntastic'
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'elzr/vim-json', {'for' : 'json'}
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries', 'for': 'go'}
@@ -58,6 +60,13 @@ Plug 'hashivim/vim-terraform', {'for': 'tf'}
 Plug 'juliosueiras/vim-terraform-completion', {'for': 'tf'}
 Plug 'ingydotnet/yaml-vim'
 Plug 'isobit/vim-caddyfile', {'for': 'Caddyfile'}
+Plug 'dart-lang/dart-vim-plugin', {'for': 'dart'}
+Plug 'thosakwe/vim-flutter', {'for': 'dart'}
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'maxmellon/vim-jsx-pretty'
 
 
 " color schemes
@@ -188,6 +197,7 @@ autocmd BufNewFile,BufRead *.vue setlocal softtabstop=2 shiftwidth=2 tabstop=2 e
 autocmd BufNewFile,BufRead *.vue setlocal softtabstop=2 shiftwidth=2 tabstop=2 expandtab
 autocmd BufNewFile,BufRead *.dart setlocal softtabstop=2 shiftwidth=2 tabstop=2 expandtab
 autocmd BufNewFile,BufRead *.ts setlocal softtabstop=2 shiftwidth=2 tabstop=2 expandtab
+autocmd BufNewFile,BufRead *.js setlocal softtabstop=2 shiftwidth=2 tabstop=2 expandtab
 
 augroup filetypedetect
   autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
@@ -751,6 +761,19 @@ nmap <Leader>g <Plug>BookmarkMoveToLine
 
 " ==================== AsyncRun ====================
 let g:asyncrun_open = 6
+
+" ==================== ale ====================
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '⚠️'
+
+" ==================== ultisnip ====================
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" ======================== javascript ==================
+let g:vim_jsx_pretty_colorful_config = 1
+let g:vim_jsx_pretty_highlight_close_tag = 1
 
 " ==================== Various other plugin settings ====================
 
