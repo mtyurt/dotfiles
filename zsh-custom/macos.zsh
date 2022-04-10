@@ -24,3 +24,7 @@ alias ll="ls -l" # Mac OSX specific
 
 # other
 alias preview='open -a Preview'
+
+cb() {
+    cat $* | pbcopy
+}
