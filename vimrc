@@ -27,6 +27,8 @@ Plug 'macthecadillac/lightline-gitdiff'
 Plug 'maximbaz/lightline-ale'
 Plug 'albertomontesg/lightline-asyncrun'
 Plug 'ryanoasis/vim-devicons'
+Plug 'petertriho/nvim-scrollbar'
+Plug 'kevinhwang91/nvim-hlslens'
 
 " good to have
 Plug 'ConradIrwin/vim-bracketed-paste'
@@ -774,6 +776,11 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " ======================== javascript ==================
 let g:vim_jsx_pretty_colorful_config = 1
 let g:vim_jsx_pretty_highlight_close_tag = 1
+
+
+" ======================== scrollbar ==================
+lua require('scrollbar').setup {}
+lua require("scrollbar.handlers.search").setup {}
 
 " ==================== Various other plugin settings ====================
 

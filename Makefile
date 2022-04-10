@@ -3,6 +3,7 @@ all:
 	mkdir -p ~/.config/alacritty
 
 	[ -f ~/.vimrc ] || ln -s $(PWD)/vimrc ~/.vimrc
+	[ -d ~/.config/nvim ] || ln -s $(PWD)/nvim ~/.config/nvim
 	[ -f ~/.config/alacritty/alacritty.yml ] || ln -s $(PWD)/alacritty.yml ~/.config/alacritty/alacritty.yml
 
 	# [ -f ~/.bashrc ] || ln -s $(PWD)/bashrc ~/.bashrc
