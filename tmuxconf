@@ -193,3 +193,7 @@ set -g @prefix_highlight_copy_mode_attr 'fg=colour00,bg=colour05,bold'
 set -g @prefix_highlight_prefix_prompt 'PREFIX'
 set -g @prefix_highlight_copy_prompt 'COPY'
 # }}}
+
+# Fig Tmux Integration: Enabled
+source-file ~/.fig/tmux
+# End of Fig Tmux Integration

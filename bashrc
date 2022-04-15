@@ -1,3 +1,8 @@
+
+#### FIG ENV VARIABLES ####
+# Please make sure this block is at the start of this file.
+[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
+#### END FIG ENV VARIABLES ####
 #!/bin/bash
 GREEN='\033[0;32m'
 ORANGE='\033[0;33m'
@@ -308,3 +313,8 @@ EDITOR=vim
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 eval $(thefuck --alias)
+
+#### FIG ENV VARIABLES ####
+# Please make sure this block is at the end of this file.
+[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
+#### END FIG ENV VARIABLES ####

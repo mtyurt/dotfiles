@@ -1,3 +1,8 @@
+
+#### FIG ENV VARIABLES ####
+# Please make sure this block is at the start of this file.
+[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
+#### END FIG ENV VARIABLES ####
 export ZSH="/Users/mt/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
@@ -46,3 +51,18 @@ complete -o nospace -C /usr/local/bin/terraform terraform
 
  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+#### FIG ENV VARIABLES ####
+# Please make sure this block is at the end of this file.
+[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
+#### END FIG ENV VARIABLES ####
+#
+compdef __start_kubectl k
+source <(kubectl completion zsh)
+
+alias vim=nvim
+
+export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
+export JAVA_HOME=/usr/local/opt/openjdk@11
+
+alias bat="bat --theme gruvbox-dark"
