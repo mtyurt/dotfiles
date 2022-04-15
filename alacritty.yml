@@ -30,6 +30,7 @@ window:
   # Window decorations
   # Setting this to false will result in window without borders and title bar.
   decorations: full
+  opacity: 0.5
 
   dynamic_title: true
 
@@ -144,7 +145,6 @@ bell:
   duration: 0
 
 # Background opacity
-background_opacity: 1.0
 
 # Mouse bindings
 #
