@@ -18,6 +18,7 @@ Plug 'dense-analysis/ale'
 Plug 'ycm-core/YouCompleteMe'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'github/copilot.vim'
 
 " status line
 Plug 'itchyny/lightline.vim'
@@ -46,6 +47,7 @@ Plug 'soywod/bufmark.vim'
 Plug 'itchyny/vim-cursorword'
 Plug 'mbbill/undotree'
 Plug 'junegunn/vim-peekaboo'
+Plug 'wellle/context.vim'
 
 " syntax, language specific highlighting, etc
 " Plug 'vim-syntastic/syntastic'
@@ -69,6 +71,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'google/vim-jsonnet' , {'for': 'jsonnet'}
 
 
 " color schemes
@@ -159,7 +162,7 @@ set lazyredraw          " Wait to redraw
 
 " infinite undo
 set undofile
-set undodir=~/.cache/vim
+set undodir=/Users/mt/.cache/vim
 let s:undos = split(globpath(&undodir, '*'), "\n")
 call filter(s:undos, 'getftime(v:val) < localtime() - (60 * 60 * 24 * 90)')
 call map(s:undos, 'delete(v:val)')
@@ -204,6 +207,7 @@ autocmd BufNewFile,BufRead *.js setlocal softtabstop=2 shiftwidth=2 tabstop=2 ex
 augroup filetypedetect
   autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
   autocmd BufNewFile,BufRead *nginx.conf* setf nginx
+  autocmd BufNewFile,BufRead *.jsonnet setf jsonnet
 augroup END
 
 
@@ -398,6 +402,10 @@ augroup END
 " Fast saving
 nnoremap <leader>W :w!<cr>
 nnoremap <silent> <leader>q :q!<CR>
+
+" Past without replacing buffer
+nnoremap <leader>p "0p
+vnoremap <leader>p "0p
 
 " Center the screen
 nnoremap <space> zz
@@ -750,15 +758,15 @@ let g:bookmark_highlight_lines = 1
 let g:bookmark_no_default_key_mappings = 1
 
 nmap <Leader><Leader> <Plug>BookmarkToggle
-nmap <Leader>i <Plug>BookmarkAnnotate
-nmap <Leader>a <Plug>BookmarkShowAll
-nmap <Leader>j <Plug>BookmarkNext
-nmap <Leader>k <Plug>BookmarkPrev
-nmap <Leader>c <Plug>BookmarkClear
-nmap <Leader>x <Plug>BookmarkClearAll
-nmap <Leader>kk <Plug>BookmarkMoveUp
-nmap <Leader>jj <Plug>BookmarkMoveDown
-nmap <Leader>g <Plug>BookmarkMoveToLine
+nmap <Leader>bi <Plug>BookmarkAnnotate
+nmap <Leader>ba <Plug>BookmarkShowAll
+nmap <Leader>bj <Plug>BookmarkNext
+nmap <Leader>bk <Plug>BookmarkPrev
+nmap <Leader>bc <Plug>BookmarkClear
+nmap <Leader>bx <Plug>BookmarkClearAll
+nmap <Leader>bkk <Plug>BookmarkMoveUp
+nmap <Leader>bjj <Plug>BookmarkMoveDown
+nmap <Leader>bg <Plug>BookmarkMoveToLine
 
 
 " ==================== AsyncRun ====================
@@ -792,7 +800,16 @@ nmap  -  <Plug>(choosewin)
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " Replace selected text with C-r
-vnoremap <C-r> "hy:%s/<C-r>h/%s/gc<left><left><left>
+vnoremap <C-r> "hy:%s/<C-r>h/<C-r>h/gc<left><left><left>
 
 let g:vimwiki_list = [{'path': '~/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
+
+let g:gutentags_define_advanced_commands = 1
+
+autocmd BufNewFile,BufRead *.md set filetype=markdown
+
+autocmd FileType markdown nnoremap <leader>i i[ ] 
+autocmd BufNewFile,BufRead *.txt nnoremap <leader>i i- [ ] 
+
+vnoremap <C-s> "hy:Gcd <bar> Ack! <C-r>h<enter> 
