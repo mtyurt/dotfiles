@@ -84,7 +84,7 @@
 	git = !exec git
     revise = !git-revise
 	setup-fetching-prs = "!git config --add remote.origin.fetch '+refs/pull/*/head:refs/remotes/origin/pr/*' && git fetch origin"
-    delete-merged-branches = "!git branch --merged | grep -v master | grep -v '\\*' | xargs -n 1 git branch -d"
+    delete-merged-branches = "!git branch --merged | grep -v master | grep -v main | grep -v '\\*' | xargs -n 1 git branch -d"
     diff-branch = "!gdf $1 $2"
     copy-branch-name = "!git branch-name | pbcopy"
     copy-commit-sha = "!f() { printf $(git rev-parse --verify HEAD);}; f | pbcopy"
