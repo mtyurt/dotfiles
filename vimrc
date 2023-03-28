@@ -11,18 +11,18 @@ Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'mileszs/ack.vim'
 Plug 'ggreer/the_silver_searcher'
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'wellle/targets.vim'
 Plug 'dense-analysis/ale'
 Plug 'ycm-core/YouCompleteMe'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
+Plug 'rhysd/git-messenger.vim'
+
 
 " status line
 Plug 'itchyny/lightline.vim'
-Plug 'sainnhe/artify.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'macthecadillac/lightline-gitdiff'
 Plug 'maximbaz/lightline-ale'
@@ -41,16 +41,17 @@ Plug 'terryma/vim-expand-region'
 Plug 'anschnapp/move-less'
 Plug 't9md/vim-choosewin'
 Plug 'fcpg/vim-flattery'
-Plug 'MattesGroeger/vim-bookmarks'
 Plug 'artnez/vim-wipeout'
 Plug 'soywod/bufmark.vim'
 Plug 'itchyny/vim-cursorword'
 Plug 'mbbill/undotree'
 Plug 'junegunn/vim-peekaboo'
 Plug 'wellle/context.vim'
+Plug 'nvim-lua/plenary.nvim'
 
 " syntax, language specific highlighting, etc
-" Plug 'vim-syntastic/syntastic'
+let g:polyglot_disabled = ['dockerfile']
+
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'elzr/vim-json', {'for' : 'json'}
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries', 'for': 'go'}
@@ -72,10 +73,13 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'google/vim-jsonnet' , {'for': 'jsonnet'}
+Plug 'rust-lang/rust.vim'
+Plug 'sheerun/vim-polyglot'
 
 
 " color schemes
-Plug 'morhetz/gruvbox'
+" Plug 'morhetz/gruvbox'
+Plug 'lmburns/kimbox'
 
 " git
 Plug 'tpope/vim-fugitive'
@@ -88,10 +92,11 @@ Plug 'tmhedberg/SimpylFold', {'for': 'python'}
 Plug 'nvie/vim-flake8', {'for': 'python'}
 
 Plug 'vimwiki/vimwiki', {'for': 'vimwiki'}
+Plug 'sotte/presenting.vim'
 
 call plug#end()
 
-let g:terraform_fmt_on_save=0
+let g:terraform_fmt_on_save=1
 
 "=====================================================
 "===================== SETTINGS ======================
@@ -178,7 +183,8 @@ if exists('+termguicolors')
   set termguicolors
 endif
 
-colorscheme gruvbox
+" colorscheme gruvbox
+colorscheme kimbox
 
 
 " open help vertically
@@ -219,37 +225,6 @@ function! Devicons_Filetype()
 endfunction
 function! Devicons_Fileformat()
   return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-endfunction
-function! Artify_active_tab_num(n) abort
-  return Artify(a:n, 'bold')." \ue0bb"
-endfunction
-function! Tab_num(n) abort
-  return a:n." \ue0bb"
-endfunction
-function! Artify_inactive_tab_num(n) abort
-  return Artify(a:n, 'double_struck')." \ue0bb"
-endfunction
-function! Artify_lightline_tab_filename(s) abort
-  return Artify(lightline#tab#filename(a:s), 'monospace')
-endfunction
-function! Artify_lightline_mode() abort
-  return Artify(lightline#mode(), 'monospace')
-endfunction
-function! Artify_line_percent() abort
-  return Artify(string((100*line('.'))/line('$')), 'bold')
-endfunction
-function! Artify_line_num() abort
-  return Artify(string(line('.')), 'bold')
-endfunction
-function! Artify_col_num() abort
-  return Artify(string(getcurpos()[2]), 'bold')
-endfunction
-function! Artify_gitbranch() abort
-  if gitbranch#name() !=# ''
-    return Artify(gitbranch#name(), 'monospace')." \ue725"
-  else
-    return "\ue61b"
-  endif
 endfunction
 set laststatus=2  " Basic
 " set noshowmode  " Disable show mode info
@@ -379,7 +354,8 @@ let g:lightline.component_function = {
       \  'ctrlpmark': 'CtrlPMark'
       \ }
 
-let g:lightline = {'colorscheme' : 'gruvbox'}
+" let g:lightline = {'colorscheme' : 'gruvbox'}
+let g:lightline = {'colorscheme' : 'kimbox'}
 
 " remap leader
 let mapleader = ","
@@ -536,11 +512,6 @@ function! s:create_go_doc_comment()
 endfunction
 nnoremap <leader>ui :<C-u>call <SID>create_go_doc_comment()<CR>
 
-"key to insert mode with paste using F2 key
-map <F2> :set paste<CR>i
-" Leave paste mode on exit
-au InsertLeave * set nopaste
-
 " ==================== PYTHON ==================== 
 " leader-yf to use yapf
 autocmd FileType python nnoremap <leader>yf :0,$! /Users/mt/Library/Python/3.8/bin/yapf<Cr><C-o>
@@ -605,8 +576,6 @@ endfunction
 
 au BufRead,BufNewFile */ansible/*.yml nnoremap <leader>gr :call FindAnsibleRoleUnderCursor()<CR>
 au BufRead,BufNewFile */ansible/*.yml vnoremap <leader>gr :call FindAnsibleRoleUnderCursor()<CR>
-
-" ==================== Fonts ====================
 
 
 " ==================== SimplyFold ====================
@@ -753,31 +722,16 @@ au BufNewFile,BufRead *.md
 
 autocmd CursorHold,CursorHoldI *.md update
 
-" ==================== vim-bookmarks ====================
-let g:bookmark_highlight_lines = 1
-let g:bookmark_no_default_key_mappings = 1
-
-nmap <Leader><Leader> <Plug>BookmarkToggle
-nmap <Leader>bi <Plug>BookmarkAnnotate
-nmap <Leader>ba <Plug>BookmarkShowAll
-nmap <Leader>bj <Plug>BookmarkNext
-nmap <Leader>bk <Plug>BookmarkPrev
-nmap <Leader>bc <Plug>BookmarkClear
-nmap <Leader>bx <Plug>BookmarkClearAll
-nmap <Leader>bkk <Plug>BookmarkMoveUp
-nmap <Leader>bjj <Plug>BookmarkMoveDown
-nmap <Leader>bg <Plug>BookmarkMoveToLine
-
-
 " ==================== AsyncRun ====================
 let g:asyncrun_open = 6
 
 " ==================== ale ====================
 let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️'
+let g:ale_set_highlights = 1
 
 " ==================== ultisnip ====================
-let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="<c-l>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
@@ -786,9 +740,18 @@ let g:vim_jsx_pretty_colorful_config = 1
 let g:vim_jsx_pretty_highlight_close_tag = 1
 
 
-" ======================== scrollbar ==================
-lua require('scrollbar').setup {}
-lua require("scrollbar.handlers.search").setup {}
+" " ======================== scrollbar ==================
+" lua require('scrollbar').setup {}
+" lua require("scrollbar.handlers.search").setup {}
+
+" " ======================== vale ==================
+" lua << EOF
+" require("null-ls").setup({
+"     sources = {
+"         require("null-ls").builtins.diagnostics.vale,
+"     },
+" })
+" EOF
 
 " ==================== Various other plugin settings ====================
 
@@ -805,7 +768,7 @@ vnoremap <C-r> "hy:%s/<C-r>h/<C-r>h/gc<left><left><left>
 let g:vimwiki_list = [{'path': '~/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
 
-let g:gutentags_define_advanced_commands = 1
+" let g:gutentags_define_advanced_commands = 1
 
 autocmd BufNewFile,BufRead *.md set filetype=markdown
 
@@ -813,3 +776,7 @@ autocmd FileType markdown nnoremap <leader>i i[ ]
 autocmd BufNewFile,BufRead *.txt nnoremap <leader>i i- [ ] 
 
 vnoremap <C-s> "hy:Gcd <bar> Ack! <C-r>h<enter> 
+
+" highlight Normal guibg=none
+
+nnoremap <leader>tf :TerraformFmt<CR>
