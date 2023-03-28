@@ -1,8 +1,3 @@
-
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the start of this file.
-[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
-#### END FIG ENV VARIABLES ####
 #!/bin/bash
 GREEN='\033[0;32m'
 ORANGE='\033[0;33m'
@@ -300,9 +295,6 @@ bind "set bell-style none" # no bell
 bind "set show-all-if-ambiguous On" # show list automatically, without double tab
 # bind "TAB: menu-complete" # TAB syle completion
 
-# Ignore files with these suffixes when performing completion.
-export FIGNORE='.o:.pyc'
-
 # Ignore files that match these patterns when
 # performing filename expansion.
 export GLOBIGNORE='.DS_Store:*.o:*.pyc'
@@ -314,7 +306,4 @@ EDITOR=vim
 
 eval $(thefuck --alias)
 
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the end of this file.
-[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
-#### END FIG ENV VARIABLES ####
+. "$HOME/.cargo/env"
