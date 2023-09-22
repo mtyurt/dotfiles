@@ -22,12 +22,12 @@
     changed = green
     untracked = cyan
 [diff]
-    tool = vimdiff
+    tool = nvim -d
     noprefix = true
 [difftool]
     prompt = false
 [merge]
-    tool = vimdiff
+    tool = nvim -d
     conflictstyle = merge
 [mergetool]
     prompt = false
