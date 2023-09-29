@@ -6,7 +6,18 @@ ZSH_THEME="robbyrussell"
 
 ZSH_CUSTOM=~/.dotfiles/zsh-custom
 
-plugins=(profiles git tmux git-prompt colored-man-pages dotenv docker zsh-completions zsh-autosuggestions zsh-tmux-auto-title)
+plugins=(
+  profiles
+  git
+  git-prompt
+  tmux
+  colored-man-pages
+  dotenv
+  docker
+  zsh-completions
+  zsh-autosuggestions
+  zsh-tmux-auto-title
+)
 fpath=(~/.dotfiles/zsh-custom/autocomplete/ $fpath)
 
 source $ZSH/oh-my-zsh.sh
@@ -28,10 +39,6 @@ fi
 
 # of course
 export EDITOR=nvim
-
-export HOSTFILE=$HOME/.hosts
-
-export DYLD_LIBRARY_PATH=/usr/local/opt/openssl/lib:$DYLD_LIBRARY_PATH
 
 if [ ! "$TMUX" = "" ]; then export TERM=xterm-256color; fi
 
