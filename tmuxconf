@@ -1,4 +1,4 @@
-set-option -g default-shell /usr/local/bin/zsh
+set-option -g default-shell /bin/zsh
 
 # Set prefix key to c-f instead of defaul  c-b
 unbind C-b

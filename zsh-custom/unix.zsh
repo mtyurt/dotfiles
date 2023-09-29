@@ -110,10 +110,9 @@ find-and() {
     echo "delete: ${GREEN}find . -exec sed -i '' -e '/${MAGENTA}pattern${GREEN}/d'${RESET}\n"
 }
 
-# ag with less colorful
-agl(){
-    ag $1 --color | less
-}
-
 # aliases
 alias grep='ggrep --color=auto'
+
+killall() {
+    kill $(ps aux | grep $1 | awk '{print $2}')
+}

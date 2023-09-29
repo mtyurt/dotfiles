@@ -1,27 +1,21 @@
-export ZSH="/Users/mt/.oh-my-zsh"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/opt/postgresql@11/bin:/usr/local/opt/python@3.11/libexec/bin:/Users/mt/Library/Python/3.8/bin:/usr/local/opt/openjdk@11/bin:/usr/local/opt/node@14/bin:/opt/homebrew/bin"
+
+export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
 
-### BEGIN --- OHMYZSH setup
-COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
-
-# ALL FUNCTIONS & ALIASES ARE LOCATED UNDER HERE
 ZSH_CUSTOM=~/.dotfiles/zsh-custom
 
 plugins=(profiles git tmux git-prompt colored-man-pages dotenv docker zsh-completions zsh-autosuggestions zsh-tmux-auto-title)
-plugins+=(docker-machine)
+fpath=(~/.dotfiles/zsh-custom/autocomplete/ $fpath)
 
 source $ZSH/oh-my-zsh.sh
 fpath=(~/.dotfiles/zsh-custom/autocomplete/ $fpath)
 
-### END --- OHMYZSH setup
+# User configuration
 
 autoload -U compinit && compinit
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/opt/postgresql@11/bin:/usr/local/opt/python@3.11/libexec/bin:/Users/mt/Library/Python/3.8/bin:/usr/local/opt/openjdk@11/bin:/usr/local/opt/node@14/bin"
 export HIST_STAMPS='%d/%m/%y %T '
 
 # Senstive functions which are not pushed to Github
@@ -30,10 +24,10 @@ if [ -f ~/.bash_private ]; then
 fi
 
 # z navigation
-. /usr/local/etc/profile.d/z.sh
+. /opt/homebrew/etc/profile.d/z.sh
 
 # of course
-export EDITOR=vim
+export EDITOR=nvim
 
 export HOSTFILE=$HOME/.hosts
 
