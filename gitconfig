@@ -40,7 +40,7 @@
     default = simple
 [core]
     autocrlf = input
-    editor = /usr/local/bin/nvim
+    editor = /opt/homebrew/bin/nvim
     filemode = true
     excludesfile = ~/.dotfiles/gitignore
     trustctime = false

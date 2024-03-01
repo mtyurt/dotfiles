@@ -1,4 +1,4 @@
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/opt/postgresql@11/bin:/usr/local/opt/python@3.11/libexec/bin:/Users/mt/Library/Python/3.8/bin:/usr/local/opt/openjdk@11/bin:/usr/local/opt/node@14/bin:/opt/homebrew/bin"
+export PATH="/opt/homebrew/bin:/opt/homebrew/opt/python@3.11/Frameworks/Python.framework/Versions/3.11/bin:/Users/mt/Library/Python/3.11/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/opt/postgresql@11/bin:/usr/local/opt/openjdk@11/bin:$PATH"
 
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -54,8 +54,8 @@ source <(kubectl completion zsh)
 
 alias vim=nvim
 
-export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
 export JAVA_HOME=/usr/local/opt/openjdk@11
 
 alias bat="bat --theme gruvbox-dark"
 alias nvimdiff="nvim -d"
+alias rgi="rg --ignore-case"
