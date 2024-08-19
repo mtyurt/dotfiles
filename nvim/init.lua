@@ -142,9 +142,9 @@ require('lazy').setup({
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
     opts = {
-       indent = { char = "┊" },
+      indent = { char = "┊" },
 
-      }
+    }
   },
 
   -- "gc" to comment visual regions/lines
@@ -221,9 +221,22 @@ require('lazy').setup({
   --
   --    An additional note is that if you only copied in the `init.lua`, you can just comment this line
   --    to get rid of the warning telling you that there are not plugins in `lua/custom/plugins/`.
-  { 'github/copilot.vim' },
+  { 'zbirenbaum/copilot.lua' },
   { 'hashivim/vim-terraform' },
   { 'fatih/vim-go' },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "canary",
+    dependencies = {
+      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+      { "nvim-lua/plenary.nvim" },  -- for curl, log wrapper
+    },
+    opts = {
+      debug = true, -- Enable debugging
+      -- See Configuration section for rest
+    },
+    -- See Commands section for default commands if you want to lazy load on them
+  },
 
   { import = 'custom.plugins' },
 }, {})
@@ -620,3 +633,48 @@ vim.o.autowrite = true
 vim.o.autoread = true
 vim.o.splitbelow = true
 vim.o.splitright = true
+
+-- copilot
+require('copilot').setup({
+  panel = {
+    enabled = true,
+    auto_refresh = true,
+    keymap = {
+      jump_prev = "[[",
+      jump_next = "]]",
+      accept = "<CR>",
+      refresh = "gr",
+      open = "<M-CR>"
+    },
+    layout = {
+      position = "bottom", -- | top | left | right
+      ratio = 0.4
+    },
+  },
+  suggestion = {
+    enabled = true,
+    auto_trigger = true,
+    debounce = 75,
+    keymap = {
+      accept = "<C-l>",
+      accept_word = false,
+      accept_line = false,
+      next = "<M-]>",
+      prev = "<M-[>",
+      dismiss = "<C-]>",
+    },
+  },
+  filetypes = {
+    yaml = false,
+    markdown = false,
+    help = false,
+    gitcommit = false,
+    gitrebase = false,
+    hgcommit = false,
+    svn = false,
+    cvs = false,
+    ["."] = false,
+  },
+  copilot_node_command = 'node', -- Node.js version must be > 18.x
+  server_opts_overrides = {},
+})
