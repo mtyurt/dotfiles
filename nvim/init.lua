@@ -678,3 +678,11 @@ require('copilot').setup({
   copilot_node_command = 'node', -- Node.js version must be > 18.x
   server_opts_overrides = {},
 })
+
+-- autosave markdown files
+vim.api.nvim_create_autocmd({"BufEnter", "TextChangedI", "TextChangedP"}, {
+  pattern = "*.md",
+  callback = function()
+    vim.cmd('write')
+  end
+})
