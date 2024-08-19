@@ -27,9 +27,10 @@
 [difftool]
     prompt = false
 [merge]
-    tool = nvim -d
+    tool = nvimdiff
     conflictstyle = merge
 [mergetool]
+    tool = nvimdiff
     prompt = false
 [mergetool "vscode"]
     cmd = code --wait $MERGED
@@ -90,7 +91,8 @@
     copy-commit-sha = "!f() { printf $(git rev-parse --verify HEAD);}; f | pbcopy"
     cbn = "!git copy-branch-name"
     ccs = "!git copy-commit-sha"
-    wip = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads
+    new-branch = "!f() { git fetch origin && git checkout -b $1 origin/master --no-track;  }; f"
+    mpull = pull --rebase origin master
 [rerere]
     enabled = true
 [mergetool "sourcetree"]
