@@ -235,7 +235,27 @@ require('lazy').setup({
       debug = true, -- Enable debugging
       -- See Configuration section for rest
     },
-    -- See Commands section for default commands if you want to lazy load on them
+
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons"
+    }
+  },
+
+  {
+    "m4xshen/hardtime.nvim",
+    lazy = false,
+    dependencies = { "MunifTanjim/nui.nvim" },
+    opts = {
+      disable_mouse = false,
+    },
+  },
+  {
+    "rcarriga/nvim-notify",
+    lazy = false,
+    config = function()
+      vim.notify = require("notify")
+    end,
   },
 
   { import = 'custom.plugins' },
@@ -245,7 +265,7 @@ require('lazy').setup({
 -- See `:help vim.o`
 
 -- Set highlight on search
-vim.o.hlsearch = false
+vim.o.hlsearch = true
 
 -- Make line numbers default
 vim.wo.number = true
