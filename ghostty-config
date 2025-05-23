@@ -1,0 +1,21 @@
+keybind = super+shift+r=reload_config
+
+keybind = cmd+shift+j=goto_split:bottom
+keybind = cmd+shift+k=goto_split:top
+keybind = cmd+shift+l=goto_split:right
+keybind = cmd+shift+h=goto_split:left
+
+mouse-hide-while-typing = true
+shell-integration = zsh
+
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
+
+keybind = global:super+shift+i=toggle_quick_terminal
+
+background-opacity = 0.7
+cursor-opacity = 0.5
+
+theme = GruvboxDarkHard
+font-family = Menlo
