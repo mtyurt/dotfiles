@@ -118,9 +118,12 @@ require('lazy').setup({
     },
   },
   {
-    'lmburns/kimbox',
+    "catppuccin/nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
     config = function()
-      vim.cmd.colorscheme 'kimbox'
+      vim.cmd.colorscheme "catppuccin"
     end,
   },
 
