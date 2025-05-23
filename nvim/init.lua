@@ -130,7 +130,7 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'onedark',
+        theme = 'auto',
         component_separators = '|',
         section_separators = '',
       },
@@ -225,15 +225,21 @@ require('lazy').setup({
   { 'hashivim/vim-terraform' },
   { 'fatih/vim-go' },
   {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    branch = "canary",
+    "olimorris/codecompanion.nvim",
+    opts = {},
     dependencies = {
-      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-      { "nvim-lua/plenary.nvim" },  -- for curl, log wrapper
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
     },
+  },
+  {
+    "OXY2DEV/markview.nvim",
+    lazy = false, -- Recommended
     opts = {
-      debug = true, -- Enable debugging
-      -- See Configuration section for rest
+      preview = {
+        filetypes = { "markdown", "codecompanion" },
+        ignore_buftypes = {},
+      },
     },
 
     dependencies = {
